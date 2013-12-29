@@ -6,8 +6,8 @@
 //  Copyright __MyCompanyName__ 2013年. All rights reserved.
 //
 
-#ifndef  _APP_DELEGATE_H_
-#define  _APP_DELEGATE_H_
+#ifndef  __AppDelegate_H_
+#define  __AppDelegate_H_
 
 #include "CCApplication.h"
 
@@ -42,5 +42,5 @@ public:
     virtual void applicationWillEnterForeground();
 };
 
-#endif // _APP_DELEGATE_H_
+#endif // __AppDelegate_H_
 

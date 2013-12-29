@@ -9,6 +9,7 @@ LOCAL_MODULE_FILENAME := libcocos2dcpp
 LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/View/GameLayer.cpp \
+                   ../../Classes/View/GridNode.cpp \
                    ../../Classes/Model/MapManager.cpp \
                    ../../Classes/Controller/GameLogic.cpp
 
