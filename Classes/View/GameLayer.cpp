@@ -39,6 +39,8 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
             break;
         }
     }
+    
+    return true;
 }
 
 void GameLayer::registerWithTouchDispatcher() {
@@ -61,6 +63,22 @@ void GameLayer::updateGridNode() {
     for (int i = 0; i < cnt; i++) {
         GridNode* node = GridNode::create();
         node->setTag(grids[i]->id);
+        CCSprite *sprite = CCSprite::create(this->imageFilename(grids[i]->imageId)->getCString());
+        sprite->setScale(2.0f);
+        node->addChild(sprite);
         m_gridNodeArray->addChild(node);
     }
 }
+
+cocos2d::CCString* GameLayer::imageFilename(int imageId) {
+    return cocos2d::CCString::createWithFormat("%d.png", imageId);
+}
+
+
+
+
+
+
+
+
+

@@ -6,6 +6,7 @@
 USING_NS_CC;
 
 class GameLogic;
+struct Grid;
 
 class GridNode : public CCNode {
 public:
@@ -13,7 +14,6 @@ public:
     ~GridNode();
     virtual bool init();
     CREATE_FUNC(GridNode);
-private:
 };
 
 #endif // __GridNode_H_

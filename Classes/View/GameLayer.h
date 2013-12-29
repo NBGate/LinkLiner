@@ -21,6 +21,7 @@ public:
     void timesUp() { }
 private:
     void updateGridNode();
+    cocos2d::CCString* imageFilename(int);
 private:
     CCNode* m_gridNodeArray;
     GameLogic* m_logic;
