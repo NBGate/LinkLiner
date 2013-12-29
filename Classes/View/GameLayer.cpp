@@ -3,12 +3,12 @@
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
 
-#define OFFSET_X							20
-#define OFFSET_Y							400
-#define SIZE_W								40
-#define SIZE_H								40
-#define TOTAL_X								7
-#define TOTAL_Y                             10
+#define OFFSET_X							210
+#define OFFSET_Y							380
+#define SIZE_W								38
+#define SIZE_H								38
+#define TOTAL_ROWS							7
+#define TOTAL_COlS                          10
 #define TOTAL_IMG							16
 
 GameLayer::GameLayer() {
@@ -43,12 +43,18 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
     CCObject* obj = NULL;
     CCARRAY_FOREACH(grids, obj) {
         GridNode* grid = (GridNode*)obj;
-//        CCLog("b %0.2f %0.2f",grid->boundingBox().size.width, grid->boundingBox().size.height);
-//        CCLog("origin %0.2f %0.2f",grid->boundingBox().origin.x, grid->boundingBox().origin.y);
-//        CCLog("location %0.2f %0.2f", location.x, location.y);
+        CCLog("b %0.2f %0.2f",grid->boundingBox().size.width, grid->boundingBox().size.height);
+        CCLog("origin %0.2f %0.2f",grid->boundingBox().origin.x, grid->boundingBox().origin.y);
+        CCLog("location %0.2f %0.2f", location.x, location.y);
+        //CCPoint touchPoint = pTouch->getLocationInView();
+        //touchPoint = CCDirector::sharedDirector()->convertToGL(touchPoint);
+        //touchPoint = convertTouchToNodeSpace(pTouch);
+        //CCLog("touchPoint %0.2f %0.2f", touchPoint.x, touchPoint.y);
         if (grid->boundingBox().containsPoint(location)) {
+            
+        //if (CCRect::containsPoint()) {
             //CCLog("ccTouchBegan");//
-            CCLog("gtag %d", grid->getTag());
+            CCLog("ccTouchBegan::gtag %d\n", grid->getTag());
             m_logic->touchGrid(grid->getTag());
             break;
         }
@@ -85,16 +91,16 @@ void GameLayer::updateGridNode() {
             sprite->setScale(0.5f);
             sprite->setPosition(CCPoint(0,0));
             node->setContentSize(sprite->boundingBox().size);
-            //node->setAnchorPoint(CCPoint(0.5,0.5));
-            
+            //CCLog("%.2f,%.2f", origin.x, origin.y);
             int x = origin.x  + OFFSET_X + grids[i]->col*SIZE_W;
             int y = origin.y  + OFFSET_Y - (grids[i]->row+1)*SIZE_H;
-            CCLog("x: %d, y: %d", x, y);
+            //CCLog("id=%d:x=%d,y=%d;row=%d,col=%d,bx=%.2f,by=%.2f", i+1, x, y,grids[i]->row,grids[i]->col,node->boundingBox().size.width, node->boundingBox().size.height);
+            //CCLog("b %0.2f %0.2f",node->boundingBox().size.width, node->boundingBox().size.height);
+            //CCLog("origin %0.2f %0.2f",node->boundingBox().origin.x, node->boundingBox().origin.y);
+            //CCNode::m_bIgnoreAnchorPointForPosition=false;
+            node->setAnchorPoint(ccp(0, 0));
+            sprite->setAnchorPoint(ccp(0,0));
             node->setPosition(x, y);
-            
-            
-            /*ccp(origin.x + OFFSET_X + (SIZE_W / 2) + SIZE_W * grids[i]->col,                                                     origin.y +   480 - (SIZE_H / 2) - SIZE_H *grids[i]->row - OFFSET_Y));*/
-                              
             node->addChild(sprite);
             
             m_gridNodeArray->addChild(node);
