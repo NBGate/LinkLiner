@@ -2,6 +2,7 @@
 #define __MapManager_H__
 
 #include <vector>
+#include "math.h"
 
 using namespace std;
 
@@ -10,6 +11,7 @@ struct Grid {
         InValid     = 0x00000000,
         Normal      = 0x00000001,
         Select      = 0x00000002,
+        Empty       = 0x00000003,
         Edge        = 0x10000000
     };
     int row;
@@ -35,17 +37,32 @@ public:
     void setTime(float time) { m_time = time; }
 
     const GridArray& getGrids() const { return m_grids; }
-    const Grid* getGrid(int gridId) const { return 0; }
-    const Grid* getSelectGrid() const { return 0; }
-    void setSelectGrid(int gridid) { }
+    const Grid* getGrid(int gridId) const;
+    const Grid* getSelectGrid() const;
+    void setSelectGrid(int gridid) { m_selectId = gridid;}
 
-    Path match(int gridId1, int gridId2) { return Path(); }
-    bool isMapClear() const { return false; }
+    Path match(int gridId1, int gridId2);
+    bool isMapClear() const;
+    
+    const int ROW = 7;
+    const int COLUMN = 10;
 private:
     int m_score;
     int m_stage;
+    int m_selectId;
     float m_time;
+    Path m_path;
     GridArray m_grids;
+    void initManager();
+    bool matchLine(int gridId1, int gridId2);
+    bool matchTwoLine(int gridId1, int gridId2);
+    bool matchThreeLine(int gridId1, int gridId2);
+    bool isRowEmpty(int row, int col1, int col2);
+    bool isColEmpty(int col, int row1, int row2);
+    bool matchHorizontal(int gridId1, int gridId2);
+    bool matchVertical(int gridId1, int gridId2);
+    vector<int> getHorizontalEmpty(int gridId);
+    vector<int> getVerticalEmpty(int gridId);
 };
 
 #endif // __MapManager_H__
