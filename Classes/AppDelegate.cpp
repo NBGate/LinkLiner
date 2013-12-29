@@ -10,25 +10,24 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include "MenuScene.h"
 
 USING_NS_CC;
 using namespace CocosDenshion;
 
-AppDelegate::AppDelegate()
-{
+AppDelegate::AppDelegate() {
 
 }
 
-AppDelegate::~AppDelegate()
-{
+AppDelegate::~AppDelegate() {
 }
 
-bool AppDelegate::applicationDidFinishLaunching()
-{
+bool AppDelegate::applicationDidFinishLaunching() {
     // initialize director
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
+    CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
+    CCSize designSize = CCSizeMake(800, 480);
+    CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
 
     // turn on display FPS
     pDirector->setDisplayStats(true);
@@ -37,7 +36,7 @@ bool AppDelegate::applicationDidFinishLaunching()
     pDirector->setAnimationInterval(1.0 / 60);
 
     // create a scene. it's an autorelease object
-    CCScene *pScene = Menu::scene();
+    CCScene *pScene = CCScene::create();
 
     // run
     pDirector->runWithScene(pScene);
