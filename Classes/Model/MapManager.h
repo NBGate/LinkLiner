@@ -36,17 +36,18 @@ public:
     float getTime() const { return m_time; }
     void setTime(float time) { m_time = time; }
 
-    const GridArray& getGrids() const { return m_grids; }
-    const Grid* getGrid(int gridId) const;
-    const Grid* getSelectGrid() const;
+    GridArray& getGrids() { return m_grids; }
+    Grid* getGrid(int gridId);
+    Grid* getSelectGrid();
     void setSelectGrid(int gridid) { m_selectId = gridid;}
 
     Path match(int gridId1, int gridId2);
-    bool isMapClear() const;
+    bool isMapClear();
     
     const int ROW = 7;
     const int COLUMN = 10;
 private:
+    int m_maps[7][10];
     int m_score;
     int m_stage;
     int m_selectId;

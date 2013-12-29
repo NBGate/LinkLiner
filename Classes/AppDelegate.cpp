@@ -10,6 +10,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
+#include <View/GameLayer.h>
 
 USING_NS_CC;
 using namespace CocosDenshion;
@@ -37,7 +38,9 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     // create a scene. it's an autorelease object
     CCScene *pScene = CCScene::create();
-
+    GameLayer *pLayer = GameLayer::create();
+    //pLayer->init();
+    pScene->addChild(pLayer);
     // run
     pDirector->runWithScene(pScene);
 

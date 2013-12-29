@@ -1,12 +1,21 @@
 #include "MapManager.h"
 
+int g_maps[7][10] = {
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,1,0,0,0,0,0,0,1,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,1,3,0,1,0,3,2,1,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,2,0,0,0,0,0,0,1,0},
+    {0,0,0,0,0,0,0,0,0,0}
+};
+
 MapManager::MapManager() {
     initManager();
 }
 
 MapManager::~MapManager() {
-    delete [] m_maps;
-    
+//    delete [][] m_maps;
 }
 
 Grid* MapManager::getGrid(int gridId) {
@@ -16,7 +25,7 @@ Grid* MapManager::getGrid(int gridId) {
             return m_grids[i];
         }
     }
-    return null;
+    return NULL;
 }
 
 Grid* MapManager::getSelectGrid() {
@@ -26,27 +35,15 @@ Grid* MapManager::getSelectGrid() {
             return m_grids[i];
         }
     }
-    return null;
+    return NULL;
 }
 
 
 void MapManager::initManager() {
-    m_maps = {
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,1,0,0,0,0,0,0,1,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,1,3,0,1,0,3,2,1,0},
-        {0,0,0,0,0,0,0,0,0,0},
-        {0,2,0,0,0,0,0,0,1,0},
-        {0,0,0,0,0,0,0,0,0,0}
-    };
-    
-    m_grids = new GridArray();
+    memcpy(m_maps, g_maps, sizeof(m_maps));
     
     m_selectId = -1;
-    
-    m_path = new Path();
-    
+       
     for(int i = 0; i < ROW; i++) {
         for(int j = 0; j < COLUMN; j++) {
             Grid* grid = new Grid();
@@ -65,9 +62,9 @@ void MapManager::initManager() {
     
 }
 
-Path MapManager::match(int gridId1, int gridId2) {
+MapManager::Path MapManager::match(int gridId1, int gridId2) {
     if (gridId1 == gridId2 || gridId1 < 0 || gridId2 < 0) {
-        return null;
+        return Path();
     }
     
     if (matchLine(gridId1, gridId2)) {
@@ -82,17 +79,17 @@ Path MapManager::match(int gridId1, int gridId2) {
         return m_path;
     }
     
-    return null;
+    return Path();
 }
 
 bool MapManager::matchLine(int gridId1, int gridId2) {
     //判断一条连线上是否能消除
     m_path.clear();
     
-    Grid g1 = this->getGrid(gridId1);
-    Grid g2 = this->getGrid(gridId2);
+    Grid* g1 = getGrid(gridId1);
+    Grid* g2 = getGrid(gridId2);
     
-    if (g1 == null || g2 == null) {
+    if (g1 == NULL || g2 == NULL) {
         return false;
     }
     
@@ -111,23 +108,23 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
     //判断一次折线能否消除
     m_path.clear();
     
-    Grid g1 = this->getGrid(gridId1);
-    Grid g2 = this->getGrid(gridId2);
+    Grid* g1 = this->getGrid(gridId1);
+    Grid* g2 = this->getGrid(gridId2);
     
-    if (g1 == null || g2 == null) {
+    if (g1 == NULL || g2 == NULL) {
         return false;
     }
     
     //得到矩形区域的另外两个点
     int pos = g2->col + g1->row * COLUMN;
-    Grid g3 = m_grids[pos];
+    Grid* g3 = m_grids[pos];
     if ( matchLine(g1->id, g3->id) && matchLine(g2->id, g3->id) ) {
         m_path.push_back(g3->id);
         return true;
     }
     
     pos = g1->col + g2->row * COLUMN;
-    Grid g4 = m_grids[pos];
+    Grid* g4 = m_grids[pos];
     if ( matchLine(g1->id, g4->id) && matchLine(g2->id, g4->id) ) {
         m_path.push_back(g4->id);
         return true;
@@ -149,9 +146,9 @@ bool MapManager::matchThreeLine(int gridId1, int gridId2) {
     return false;
 }
 
-bool MapManager::isRowEmpty(<#int row#>, <#int col1#>, <#int col2#>) {
+bool MapManager::isRowEmpty(int row, int col1, int col2){
     //水平方向上能否消除
-    if( Math.abs(col1 - col2) <= 1 ) {
+    if( abs(col1 - col2) <= 1 ) {
         return true;
     }
     if( col1 < col2 ) {
@@ -174,7 +171,7 @@ bool MapManager::isRowEmpty(<#int row#>, <#int col1#>, <#int col2#>) {
 
 bool MapManager::isColEmpty(int col, int row1, int row2) {
     //垂直方向上能否消除
-    if( Math.abs(row1 - row2) <= 1 ) {
+    if( abs(row1 - row2) <= 1 ) {
         return true;
     }
     if( row1 < row2 ) {
@@ -197,10 +194,10 @@ bool MapManager::isColEmpty(int col, int row1, int row2) {
 
 bool MapManager::matchHorizontal(int gridId1, int gridId2) {
     //两点在水平方向上，能否通过2次折线连接
-    Grid g1 = this->getGrid(gridId1);
-    Grid g2 = this->getGrid(gridId2);
+    Grid* g1 = this->getGrid(gridId1);
+    Grid* g2 = this->getGrid(gridId2);
     
-    if (g1 == null || g2 == null) {
+    if (g1 == NULL || g2 == NULL) {
         return false;
     }
     vector<int> g1List = getHorizontalEmpty(g1->id);
@@ -208,9 +205,9 @@ bool MapManager::matchHorizontal(int gridId1, int gridId2) {
     int g1Len = g1List.size();
     int g2Len = g2List.size();
     for (int i = 0; i < g1Len; i++) {
-        Grid g1Temp = this->getGrid(g1List[i]);
+        Grid* g1Temp = this->getGrid(g1List[i]);
         for (int j = 0; j < g2Len; j++) {
-            Grid g2Temp = this->getGrid(g2List[j]);
+            Grid* g2Temp = this->getGrid(g2List[j]);
             if (g1Temp->col == g2Temp->col) {
                 if (isColEmpty(g1Temp->col, g1Temp->row, g2Temp->row)) {
                     this->m_path.push_back(g1Temp->id);
@@ -226,10 +223,10 @@ bool MapManager::matchHorizontal(int gridId1, int gridId2) {
 
 bool MapManager::matchVertical(int gridId1, int gridId2) {
     //两点在垂直方向上，能否通过2次折线连接
-    Grid g1 = this->getGrid(gridId1);
-    Grid g2 = this->getGrid(gridId2);
+    Grid* g1 = this->getGrid(gridId1);
+    Grid* g2 = this->getGrid(gridId2);
     
-    if (g1 == null || g2 == null) {
+    if (g1 == NULL || g2 == NULL) {
         return false;
     }
     vector<int> g1List = getVerticalEmpty(g1->id);
@@ -237,9 +234,9 @@ bool MapManager::matchVertical(int gridId1, int gridId2) {
     int g1Len = g1List.size();
     int g2Len = g2List.size();
     for (int i = 0; i < g1Len; i++) {
-        Grid g1Temp = this->getGrid(g1List[i]);
+        Grid* g1Temp = this->getGrid(g1List[i]);
         for (int j = 0; j < g2Len; j++) {
-            Grid g2Temp = this->getGrid(g2List[j]);
+            Grid* g2Temp = this->getGrid(g2List[j]);
             if (g1Temp->row == g2Temp->row) {
                 if (isRowEmpty(g1Temp->row, g1Temp->col, g2Temp->col)) {
                     this->m_path.push_back(g1Temp->id);
@@ -255,13 +252,13 @@ bool MapManager::matchVertical(int gridId1, int gridId2) {
 
 vector<int> MapManager::getHorizontalEmpty(int gridId) {
     //节点在水平方向上，左右可以延伸的id列表
-    vector<int> list = new vector<int>();
-    Grid grid = this->getGrid(gridId);
+    vector<int> list;
+    Grid* grid = this->getGrid(gridId);
     int pos;
     for (int i = grid->col - 1; i >= 0; i--) {
         pos = i + grid->row * ROW;
         if (m_grids[pos]->status == Grid::Empty) {
-            list->push_back(m_grids[pos]->id);
+            list.push_back(m_grids[pos]->id);
         } else {
             break;
         }
@@ -269,7 +266,7 @@ vector<int> MapManager::getHorizontalEmpty(int gridId) {
     for (int i = grid->col + 1; i < COLUMN; i++) {
         pos = i + grid->row * ROW;
         if (m_grids[pos]->status == Grid::Empty) {
-            list->push_back(m_grids[pos]->id);
+            list.push_back(m_grids[pos]->id);
         } else {
             break;
         }
@@ -279,13 +276,13 @@ vector<int> MapManager::getHorizontalEmpty(int gridId) {
 
 vector<int> MapManager::getVerticalEmpty(int gridId) {
     //节点在垂直方向上，上下可以延伸的id列表
-    vector<int> list = new vector<int>();
-    Grid grid = this->getGrid(gridId);
+    vector<int> list;
+    Grid* grid = this->getGrid(gridId);
     int pos;
     for (int i = grid->row - 1; i >= 0; i--) {
         pos = grid->col + i * ROW;
         if (m_grids[pos]->status == Grid::Empty) {
-            list->push_back(m_grids[pos]->id);
+            list.push_back(m_grids[pos]->id);
         } else {
             break;
         }
@@ -293,7 +290,7 @@ vector<int> MapManager::getVerticalEmpty(int gridId) {
     for (int i = grid->row + 1; i < COLUMN; i++) {
         pos = grid->col + i * ROW;
         if (m_grids[pos]->status == Grid::Empty) {
-            list->push_back(m_grids[pos]->id);
+            list.push_back(m_grids[pos]->id);
         } else {
             break;
         }

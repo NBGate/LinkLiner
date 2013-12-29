@@ -40,16 +40,22 @@ void GameLogic::update(float delta) {
 }
 
 void GameLogic::touchGrid(int gridId) {
-    const Grid* grid = m_currentMap->getSelectGrid();
+    Grid* grid = m_currentMap->getSelectGrid();
+    
     if (grid == NULL) {
         m_currentMap->setSelectGrid(gridId);
     }
     else {
+        printf("%d %d", grid->id, gridId);
         MapManager::Path path = m_currentMap->match(grid->id, gridId);
         if (path.size() == 0) {
             m_currentMap->setSelectGrid(gridId);
         }
         else {
+            printf("xiao chu");
+            grid->status = Grid::Empty;
+            m_currentMap->getGrid(gridId)->status = Grid::Empty;
+            m_currentMap->setSelectGrid(-1);
         }
     }
 }

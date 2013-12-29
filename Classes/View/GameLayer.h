@@ -19,9 +19,12 @@ public:
     virtual void update(float delta);
 
     void timesUp() { }
+    
 private:
     void updateGridNode();
     cocos2d::CCString* imageFilename(int);
+    //cocos2d::CCPoint pointOfView(cocos2d::CCPoint point);
+    
 private:
     CCNode* m_gridNodeArray;
     GameLogic* m_logic;
