@@ -1,4 +1,5 @@
 #include "GameLayer.h"
+#include "SimpleAudioEngine.h"
 #include <View/GridNode.h>
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
@@ -25,6 +26,8 @@ bool GameLayer::init() {
     do {
         CCLayer::init();
         CCLog("GameLayer::init");
+        initView();
+        initSound();
         m_gridNodeArray = CCNode::create();
         this->addChild(m_gridNodeArray);
         this->setTouchEnabled(true);
@@ -36,24 +39,29 @@ bool GameLayer::init() {
     return bRet;
 }
 
+void GameLayer::initView() {
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    CCSprite* bgSprite = CCSprite::create("bg.png");
+    bgSprite->setPosition(ccp(winSize.width/2, winSize.height/2));
+    this->addChild(bgSprite);
+}
+
+
+void GameLayer::initSound() {
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
+    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("back2.mp3", true);
+}
+
 bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
     CCPoint location = pTouch->getLocation();
-    //CCLog("ccTouchBegan");
     CCArray* grids = m_gridNodeArray->getChildren();
     CCObject* obj = NULL;
     CCARRAY_FOREACH(grids, obj) {
         GridNode* grid = (GridNode*)obj;
-        CCLog("b %0.2f %0.2f",grid->boundingBox().size.width, grid->boundingBox().size.height);
-        CCLog("origin %0.2f %0.2f",grid->boundingBox().origin.x, grid->boundingBox().origin.y);
-        CCLog("location %0.2f %0.2f", location.x, location.y);
-        //CCPoint touchPoint = pTouch->getLocationInView();
-        //touchPoint = CCDirector::sharedDirector()->convertToGL(touchPoint);
-        //touchPoint = convertTouchToNodeSpace(pTouch);
-        //CCLog("touchPoint %0.2f %0.2f", touchPoint.x, touchPoint.y);
+        //CCLog("b %0.2f %0.2f",grid->boundingBox().size.width, grid->boundingBox().size.height);
+        //CCLog("origin %0.2f %0.2f",grid->boundingBox().origin.x, grid->boundingBox().origin.y);
+        //CCLog("location %0.2f %0.2f", location.x, location.y);
         if (grid->boundingBox().containsPoint(location)) {
-            
-        //if (CCRect::containsPoint()) {
-            //CCLog("ccTouchBegan");//
             CCLog("ccTouchBegan::gtag %d\n", grid->getTag());
             m_logic->touchGrid(grid->getTag());
             break;
@@ -74,7 +82,6 @@ void GameLayer::update(float delta) {
 }
 
 void GameLayer::updateGridNode() {
-    //CCLog("GameLayer::updateGridNode");
     m_gridNodeArray->removeAllChildren();
     MapManager* map = m_logic->currentMap();
     if (map == NULL)
@@ -91,7 +98,6 @@ void GameLayer::updateGridNode() {
             sprite->setScale(0.5f);
             sprite->setPosition(CCPoint(0,0));
             node->setContentSize(sprite->boundingBox().size);
-            //CCLog("%.2f,%.2f", origin.x, origin.y);
             int x = origin.x  + OFFSET_X + grids[i]->col*SIZE_W;
             int y = origin.y  + OFFSET_Y - (grids[i]->row+1)*SIZE_H;
             //CCLog("id=%d:x=%d,y=%d;row=%d,col=%d,bx=%.2f,by=%.2f", i+1, x, y,grids[i]->row,grids[i]->col,node->boundingBox().size.width, node->boundingBox().size.height);
@@ -99,7 +105,7 @@ void GameLayer::updateGridNode() {
             //CCLog("origin %0.2f %0.2f",node->boundingBox().origin.x, node->boundingBox().origin.y);
             //CCNode::m_bIgnoreAnchorPointForPosition=false;
             node->setAnchorPoint(ccp(0, 0));
-            sprite->setAnchorPoint(ccp(0,0));
+            sprite->setAnchorPoint(ccp(0, 0));
             node->setPosition(x, y);
             node->addChild(sprite);
             

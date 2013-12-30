@@ -23,7 +23,8 @@ public:
 private:
     void updateGridNode();
     cocos2d::CCString* imageFilename(int);
-    //cocos2d::CCPoint pointOfView(cocos2d::CCPoint point);
+    void initSound();
+    void initView();
     
 private:
     CCNode* m_gridNodeArray;

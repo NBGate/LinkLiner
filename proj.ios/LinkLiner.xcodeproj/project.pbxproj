@@ -232,6 +232,13 @@
 		379BB9D317F03F3700829B88 /* GUIReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99117F03F3700829B88 /* GUIReader.cpp */; };
 		379BB9D417F03F3700829B88 /* SceneReader.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 379BB99317F03F3700829B88 /* SceneReader.cpp */; };
 		7855E0E1153FEF240059DD9A /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 7855E0DF153FEF240059DD9A /* Default.png */; };
+		890EC5191870F18E00C6F0D6 /* back1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5101870F18E00C6F0D6 /* back1.mp3 */; };
+		890EC51A1870F18E00C6F0D6 /* back2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5111870F18E00C6F0D6 /* back2.mp3 */; };
+		890EC51B1870F18E00C6F0D6 /* back3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5121870F18E00C6F0D6 /* back3.mp3 */; };
+		890EC51C1870F18E00C6F0D6 /* choose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5131870F18E00C6F0D6 /* choose.wav */; };
+		890EC51D1870F18E00C6F0D6 /* clean.wav in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5141870F18E00C6F0D6 /* clean.wav */; };
+		890EC51E1870F18E00C6F0D6 /* arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5161870F18E00C6F0D6 /* arial.ttf */; };
+		890EC51F1870F18E00C6F0D6 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5171870F18E00C6F0D6 /* Marker Felt.ttf */; };
 		894C5F56187031C800178A01 /* GridNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 894C5F54187031C800178A01 /* GridNode.cpp */; };
 		8988A80D187041AF004D3610 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8988A7E4187041AF004D3610 /* 1.png */; };
 		8988A80E187041AF004D3610 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8988A7E5187041AF004D3610 /* 2.png */; };
@@ -767,6 +774,13 @@
 		379BB99317F03F3700829B88 /* SceneReader.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = SceneReader.cpp; sourceTree = "<group>"; };
 		379BB99417F03F3700829B88 /* SceneReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SceneReader.h; sourceTree = "<group>"; };
 		7855E0DF153FEF240059DD9A /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
+		890EC5101870F18E00C6F0D6 /* back1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = back1.mp3; sourceTree = "<group>"; };
+		890EC5111870F18E00C6F0D6 /* back2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = back2.mp3; sourceTree = "<group>"; };
+		890EC5121870F18E00C6F0D6 /* back3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = back3.mp3; sourceTree = "<group>"; };
+		890EC5131870F18E00C6F0D6 /* choose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = choose.wav; sourceTree = "<group>"; };
+		890EC5141870F18E00C6F0D6 /* clean.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clean.wav; sourceTree = "<group>"; };
+		890EC5161870F18E00C6F0D6 /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.ttf; sourceTree = "<group>"; };
+		890EC5171870F18E00C6F0D6 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
 		894C5F54187031C800178A01 /* GridNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridNode.cpp; sourceTree = "<group>"; };
 		894C5F55187031C800178A01 /* GridNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridNode.h; sourceTree = "<group>"; };
 		8988A7E4187041AF004D3610 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
@@ -1797,6 +1811,12 @@
 		78C7DDAA14EBA5050085D0C2 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				890EC5101870F18E00C6F0D6 /* back1.mp3 */,
+				890EC5111870F18E00C6F0D6 /* back2.mp3 */,
+				890EC5121870F18E00C6F0D6 /* back3.mp3 */,
+				890EC5131870F18E00C6F0D6 /* choose.wav */,
+				890EC5141870F18E00C6F0D6 /* clean.wav */,
+				890EC5151870F18E00C6F0D6 /* fonts */,
 				8988A7E4187041AF004D3610 /* 1.png */,
 				8988A7E5187041AF004D3610 /* 2.png */,
 				8988A7E6187041AF004D3610 /* 3.png */,
@@ -1848,6 +1868,15 @@
 			);
 			name = Resources;
 			path = ../Resources;
+			sourceTree = "<group>";
+		};
+		890EC5151870F18E00C6F0D6 /* fonts */ = {
+			isa = PBXGroup;
+			children = (
+				890EC5161870F18E00C6F0D6 /* arial.ttf */,
+				890EC5171870F18E00C6F0D6 /* Marker Felt.ttf */,
+			);
+			path = fonts;
 			sourceTree = "<group>";
 		};
 		8988A7FE187041AF004D3610 /* fonts */ = {
@@ -1981,14 +2010,18 @@
 				D4EF949C15BD2D8E00D803EB /* Icon-114.png in Resources */,
 				D4EF949E15BD2D9600D803EB /* Icon-72.png in Resources */,
 				8988A833187041AF004D3610 /* progress.png in Resources */,
+				890EC51F1870F18E00C6F0D6 /* Marker Felt.ttf in Resources */,
 				8988A820187041AF004D3610 /* disappear2.wav in Resources */,
 				8988A815187041AF004D3610 /* 9.png in Resources */,
 				D4EF94A015BD2D9800D803EB /* Icon-144.png in Resources */,
 				8988A825187041AF004D3610 /* disappear7.wav in Resources */,
 				8988A819187041AF004D3610 /* 13.png in Resources */,
+				890EC51A1870F18E00C6F0D6 /* back2.mp3 in Resources */,
 				8988A831187041AF004D3610 /* lose.mp3 in Resources */,
 				8988A82B187041AF004D3610 /* Icon-Small.png in Resources */,
+				890EC51C1870F18E00C6F0D6 /* choose.wav in Resources */,
 				D41A0AD1160F154A004552AE /* Default-568h@2x.png in Resources */,
+				890EC51B1870F18E00C6F0D6 /* back3.mp3 in Resources */,
 				8988A81B187041AF004D3610 /* 15.png in Resources */,
 				8988A81C187041AF004D3610 /* 16.png in Resources */,
 				8988A817187041AF004D3610 /* 11.png in Resources */,
@@ -1998,14 +2031,17 @@
 				8988A813187041AF004D3610 /* 7.png in Resources */,
 				8988A81F187041AF004D3610 /* disappear1.wav in Resources */,
 				15A3D9961682F7F9002FB0C5 /* CMakeLists.txt in Resources */,
+				890EC51D1870F18E00C6F0D6 /* clean.wav in Resources */,
 				8988A823187041AF004D3610 /* disappear5.wav in Resources */,
 				1AFAF8BC16D35E4900DB1158 /* CloseNormal.png in Resources */,
 				8988A82D187041AF004D3610 /* Icon.png in Resources */,
 				8988A80D187041AF004D3610 /* 1.png in Resources */,
+				890EC51E1870F18E00C6F0D6 /* arial.ttf in Resources */,
 				1AFAF8BD16D35E4900DB1158 /* CloseSelected.png in Resources */,
 				8988A81A187041AF004D3610 /* 14.png in Resources */,
 				8988A827187041AF004D3610 /* arial.ttf in Resources */,
 				8988A834187041AF004D3610 /* win.mp3 in Resources */,
+				890EC5191870F18E00C6F0D6 /* back1.mp3 in Resources */,
 				8988A810187041AF004D3610 /* 4.png in Resources */,
 				8988A832187041AF004D3610 /* play.png in Resources */,
 				1AFAF8BE16D35E4900DB1158 /* HelloWorld.png in Resources */,

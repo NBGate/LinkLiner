@@ -52,7 +52,7 @@ void GameLogic::touchGrid(int gridId) {
             m_currentMap->setSelectGrid(gridId);
         }
         else {
-            printf("xiao chu");
+            printf("xiao chu\n");
             grid->status = Grid::Empty;
             m_currentMap->getGrid(gridId)->status = Grid::Empty;
             m_currentMap->setSelectGrid(-1);
