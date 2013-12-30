@@ -6,3 +6,11 @@ bin/
 obj/
 gen/
 local.properties
+
+*.xcworkspacedata
+
+*.xcuserstate
+
+*.xcscheme
+
+*.plist
