@@ -10,7 +10,7 @@
 
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
-#include <View/GameLayer.h>
+#include <View/MenuScene.h>
 #include <Model/Record.h>
 
 USING_NS_CC;
@@ -39,10 +39,11 @@ bool AppDelegate::applicationDidFinishLaunching() {
 
     Record::instance()->load();
     // create a scene. it's an autorelease object
-    CCScene *pScene = CCScene::create();
-    GameLayer *pLayer = GameLayer::create();
+    //CCScene *pScene = CCScene::create();
+    //GameLayer *pLayer = GameLayer::create();
     //pLayer->init();
-    pScene->addChild(pLayer);
+    //pScene->addChild(pLayer);
+    CCScene *pScene = Menu::scene();
     // run
     pDirector->runWithScene(pScene);
 

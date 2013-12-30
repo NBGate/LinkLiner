@@ -239,6 +239,9 @@
 		890EC51D1870F18E00C6F0D6 /* clean.wav in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5141870F18E00C6F0D6 /* clean.wav */; };
 		890EC51E1870F18E00C6F0D6 /* arial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5161870F18E00C6F0D6 /* arial.ttf */; };
 		890EC51F1870F18E00C6F0D6 /* Marker Felt.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 890EC5171870F18E00C6F0D6 /* Marker Felt.ttf */; };
+		890EC5241871B8A100C6F0D6 /* Record.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 890EC5221871B8A100C6F0D6 /* Record.cpp */; };
+		890EC5281871B8D400C6F0D6 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 890EC5261871B8D400C6F0D6 /* Utils.cpp */; };
+		890EC55A1871D5FC00C6F0D6 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 890EC5581871D5FC00C6F0D6 /* MenuScene.cpp */; };
 		894C5F56187031C800178A01 /* GridNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 894C5F54187031C800178A01 /* GridNode.cpp */; };
 		8988A80D187041AF004D3610 /* 1.png in Resources */ = {isa = PBXBuildFile; fileRef = 8988A7E4187041AF004D3610 /* 1.png */; };
 		8988A80E187041AF004D3610 /* 2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8988A7E5187041AF004D3610 /* 2.png */; };
@@ -781,6 +784,12 @@
 		890EC5141870F18E00C6F0D6 /* clean.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = clean.wav; sourceTree = "<group>"; };
 		890EC5161870F18E00C6F0D6 /* arial.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = arial.ttf; sourceTree = "<group>"; };
 		890EC5171870F18E00C6F0D6 /* Marker Felt.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Marker Felt.ttf"; sourceTree = "<group>"; };
+		890EC5221871B8A100C6F0D6 /* Record.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Record.cpp; sourceTree = "<group>"; };
+		890EC5231871B8A100C6F0D6 /* Record.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Record.h; sourceTree = "<group>"; };
+		890EC5261871B8D400C6F0D6 /* Utils.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Utils.cpp; sourceTree = "<group>"; };
+		890EC5271871B8D400C6F0D6 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
+		890EC5581871D5FC00C6F0D6 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuScene.cpp; sourceTree = "<group>"; };
+		890EC5591871D5FC00C6F0D6 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
 		894C5F54187031C800178A01 /* GridNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridNode.cpp; sourceTree = "<group>"; };
 		894C5F55187031C800178A01 /* GridNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridNode.h; sourceTree = "<group>"; };
 		8988A7E4187041AF004D3610 /* 1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 1.png; sourceTree = "<group>"; };
@@ -1362,6 +1371,7 @@
 		15AA9C4015B7EC450033D6C2 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				890EC5251871B8D400C6F0D6 /* Utils */,
 				93A9F5EE1870103F00C5DE4A /* Controller */,
 				93A9F5F11870103F00C5DE4A /* Model */,
 				93A9F5F41870103F00C5DE4A /* View */,
@@ -1879,6 +1889,16 @@
 			path = fonts;
 			sourceTree = "<group>";
 		};
+		890EC5251871B8D400C6F0D6 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				890EC5261871B8D400C6F0D6 /* Utils.cpp */,
+				890EC5271871B8D400C6F0D6 /* Utils.h */,
+			);
+			name = Utils;
+			path = ../Classes/Utils;
+			sourceTree = "<group>";
+		};
 		8988A7FE187041AF004D3610 /* fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -1901,6 +1921,8 @@
 		93A9F5F11870103F00C5DE4A /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				890EC5221871B8A100C6F0D6 /* Record.cpp */,
+				890EC5231871B8A100C6F0D6 /* Record.h */,
 				93A9F5F21870103F00C5DE4A /* MapManager.cpp */,
 				93A9F5F31870103F00C5DE4A /* MapManager.h */,
 			);
@@ -1911,6 +1933,8 @@
 		93A9F5F41870103F00C5DE4A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				890EC5581871D5FC00C6F0D6 /* MenuScene.cpp */,
+				890EC5591871D5FC00C6F0D6 /* MenuScene.h */,
 				894C5F54187031C800178A01 /* GridNode.cpp */,
 				894C5F55187031C800178A01 /* GridNode.h */,
 				93A9F5F51870103F00C5DE4A /* GameLayer.cpp */,
@@ -2214,13 +2238,16 @@
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
 				379BB99517F03F3700829B88 /* CCActionFrame.cpp in Sources */,
+				890EC5241871B8A100C6F0D6 /* Record.cpp in Sources */,
 				379BB99617F03F3700829B88 /* CCActionFrameEasing.cpp in Sources */,
+				890EC5281871B8D400C6F0D6 /* Utils.cpp in Sources */,
 				379BB99717F03F3700829B88 /* CCActionManager.cpp in Sources */,
 				379BB99817F03F3700829B88 /* CCActionNode.cpp in Sources */,
 				379BB99917F03F3700829B88 /* CCActionObject.cpp in Sources */,
 				379BB99A17F03F3700829B88 /* CCArmatureAnimation.cpp in Sources */,
 				379BB99B17F03F3700829B88 /* CCProcessBase.cpp in Sources */,
 				379BB99C17F03F3700829B88 /* CCTween.cpp in Sources */,
+				890EC55A1871D5FC00C6F0D6 /* MenuScene.cpp in Sources */,
 				379BB99D17F03F3700829B88 /* CCArmature.cpp in Sources */,
 				379BB99E17F03F3700829B88 /* CCBone.cpp in Sources */,
 				379BB99F17F03F3700829B88 /* CCDatas.cpp in Sources */,
