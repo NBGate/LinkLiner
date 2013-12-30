@@ -67,15 +67,31 @@ MapManager::Path MapManager::match(int gridId1, int gridId2) {
         return Path();
     }
     
+    Grid* g1 = getGrid(gridId1);
+    Grid* g2 = getGrid(gridId2);
+    
+    if (g1 == NULL || g2 == NULL) {
+        return Path();
+    }
+    
+    if (g1->imageId != g2->imageId) {
+        return Path();
+    }
+    
     if (matchLine(gridId1, gridId2)) {
+        m_path.push_back(gridId1);
+        m_path.push_back(gridId2);
+        CCLog("MapManager::matchLine done");
         return m_path;
     }
     
     if (matchTwoLine(gridId1, gridId2)) {
+        CCLog("MapManager::matchTwoLine done");
         return m_path;
     }
     
     if (matchThreeLine(gridId1, gridId2)) {
+        CCLog("MapManager::matchThreeLine done");
         return m_path;
     }
     
@@ -119,14 +135,18 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
     int pos = g2->col + g1->row * COLUMN;
     Grid* g3 = m_grids[pos];
     if ( matchLine(g1->id, g3->id) && matchLine(g2->id, g3->id) ) {
+        m_path.push_back(gridId1);
         m_path.push_back(g3->id);
+        m_path.push_back(gridId2);
         return true;
     }
     
     pos = g1->col + g2->row * COLUMN;
     Grid* g4 = m_grids[pos];
     if ( matchLine(g1->id, g4->id) && matchLine(g2->id, g4->id) ) {
+        m_path.push_back(gridId1);
         m_path.push_back(g4->id);
+        m_path.push_back(gridId2);
         return true;
     }
 
@@ -210,8 +230,10 @@ bool MapManager::matchHorizontal(int gridId1, int gridId2) {
             Grid* g2Temp = this->getGrid(g2List[j]);
             if (g1Temp->col == g2Temp->col) {
                 if (isColEmpty(g1Temp->col, g1Temp->row, g2Temp->row)) {
-                    this->m_path.push_back(g1Temp->id);
-                    this->m_path.push_back(g2Temp->id);
+                    m_path.push_back(gridId1);
+                    m_path.push_back(g1Temp->id);
+                    m_path.push_back(g2Temp->id);
+                    m_path.push_back(gridId2);
                     return true;
                 }
             }
@@ -239,8 +261,10 @@ bool MapManager::matchVertical(int gridId1, int gridId2) {
             Grid* g2Temp = this->getGrid(g2List[j]);
             if (g1Temp->row == g2Temp->row) {
                 if (isRowEmpty(g1Temp->row, g1Temp->col, g2Temp->col)) {
-                    this->m_path.push_back(g1Temp->id);
-                    this->m_path.push_back(g2Temp->id);
+                    m_path.push_back(gridId1);
+                    m_path.push_back(g1Temp->id);
+                    m_path.push_back(g2Temp->id);
+                    m_path.push_back(gridId2);
                     return true;
                 }
             }

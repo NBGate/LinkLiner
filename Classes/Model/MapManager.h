@@ -4,6 +4,10 @@
 #include <vector>
 #include "math.h"
 
+#include "cocos2d.h"
+
+USING_NS_CC;
+
 using namespace std;
 
 struct Grid {
