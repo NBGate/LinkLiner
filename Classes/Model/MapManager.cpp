@@ -15,7 +15,7 @@ MapManager::MapManager() {
 }
 
 MapManager::~MapManager() {
-//    delete [][] m_maps;
+    //    delete [][] m_maps;
 }
 
 Grid* MapManager::getGrid(int gridId) {
@@ -41,9 +41,9 @@ Grid* MapManager::getSelectGrid() {
 
 void MapManager::initManager() {
     memcpy(m_maps, g_maps, sizeof(m_maps));
-    
+
     m_selectId = -1;
-       
+
     for(int i = 0; i < ROW; i++) {
         for(int j = 0; j < COLUMN; j++) {
             Grid* grid = new Grid();
@@ -59,78 +59,78 @@ void MapManager::initManager() {
             m_grids.push_back(grid);
         }
     }
-    
+
 }
 
 MapManager::Path MapManager::match(int gridId1, int gridId2) {
     if (gridId1 == gridId2 || gridId1 < 0 || gridId2 < 0) {
         return Path();
     }
-    
+
     Grid* g1 = getGrid(gridId1);
     Grid* g2 = getGrid(gridId2);
-    
+
     if (g1 == NULL || g2 == NULL) {
         return Path();
     }
-    
+
     if (g1->imageId != g2->imageId) {
         return Path();
     }
-    
+
     if (matchLine(gridId1, gridId2)) {
         m_path.push_back(gridId1);
         m_path.push_back(gridId2);
         CCLog("MapManager::matchLine done");
         return m_path;
     }
-    
+
     if (matchTwoLine(gridId1, gridId2)) {
         CCLog("MapManager::matchTwoLine done");
         return m_path;
     }
-    
+
     if (matchThreeLine(gridId1, gridId2)) {
         CCLog("MapManager::matchThreeLine done");
         return m_path;
     }
-    
+
     return Path();
 }
 
 bool MapManager::matchLine(int gridId1, int gridId2) {
     //判断一条连线上是否能消除
     m_path.clear();
-    
+
     Grid* g1 = getGrid(gridId1);
     Grid* g2 = getGrid(gridId2);
-    
+
     if (g1 == NULL || g2 == NULL) {
         return false;
     }
-    
+
     if (g1->row == g2->row) {
         return isRowEmpty(g1->row, g1->col, g2->col);
     }
-    
+
     if (g1->col == g2->col) {
         return isColEmpty(g1->col, g1->row, g2->row);
     }
-    
+
     return false;
 }
 
 bool MapManager::matchTwoLine(int gridId1, int gridId2) {
     //判断一次折线能否消除
     m_path.clear();
-    
+
     Grid* g1 = this->getGrid(gridId1);
     Grid* g2 = this->getGrid(gridId2);
-    
+
     if (g1 == NULL || g2 == NULL) {
         return false;
     }
-    
+
     //得到矩形区域的另外两个点
     int pos = g2->col + g1->row * COLUMN;
     Grid* g3 = m_grids[pos];
@@ -140,7 +140,7 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
         m_path.push_back(gridId2);
         return true;
     }
-    
+
     pos = g1->col + g2->row * COLUMN;
     Grid* g4 = m_grids[pos];
     if ( matchLine(g1->id, g4->id) && matchLine(g2->id, g4->id) ) {
@@ -156,7 +156,7 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
 bool MapManager::matchThreeLine(int gridId1, int gridId2) {
     //两次折线能否消除
     m_path.clear();
-    
+
     if (matchHorizontal(gridId1, gridId2)) {
         return true;
     }
@@ -216,7 +216,7 @@ bool MapManager::matchHorizontal(int gridId1, int gridId2) {
     //两点在水平方向上，能否通过2次折线连接
     Grid* g1 = this->getGrid(gridId1);
     Grid* g2 = this->getGrid(gridId2);
-    
+
     if (g1 == NULL || g2 == NULL) {
         return false;
     }
@@ -239,7 +239,7 @@ bool MapManager::matchHorizontal(int gridId1, int gridId2) {
             }
         }
     }
-    
+
     return false;
 }
 
@@ -247,7 +247,7 @@ bool MapManager::matchVertical(int gridId1, int gridId2) {
     //两点在垂直方向上，能否通过2次折线连接
     Grid* g1 = this->getGrid(gridId1);
     Grid* g2 = this->getGrid(gridId2);
-    
+
     if (g1 == NULL || g2 == NULL) {
         return false;
     }
@@ -270,7 +270,7 @@ bool MapManager::matchVertical(int gridId1, int gridId2) {
             }
         }
     }
-    
+
     return false;
 }
 

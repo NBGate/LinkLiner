@@ -41,7 +41,7 @@ void GameLogic::update(float delta) {
 
 void GameLogic::touchGrid(int gridId) {
     Grid* grid = m_currentMap->getSelectGrid();
-    
+
     if (grid == NULL) {
         m_currentMap->setSelectGrid(gridId);
     }

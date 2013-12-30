@@ -67,7 +67,7 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
             break;
         }
     }
-    
+
     return true;
 }
 
@@ -104,11 +104,11 @@ void GameLayer::updateGridNode() {
             //CCLog("b %0.2f %0.2f",node->boundingBox().size.width, node->boundingBox().size.height);
             //CCLog("origin %0.2f %0.2f",node->boundingBox().origin.x, node->boundingBox().origin.y);
             //CCNode::m_bIgnoreAnchorPointForPosition=false;
-            node->setAnchorPoint(ccp(0, 0));
             sprite->setAnchorPoint(ccp(0, 0));
+            node->setAnchorPoint(ccp(0, 0));
             node->setPosition(x, y);
             node->addChild(sprite);
-            
+
             m_gridNodeArray->addChild(node);
         }
     }

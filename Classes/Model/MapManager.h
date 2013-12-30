@@ -47,7 +47,7 @@ public:
 
     Path match(int gridId1, int gridId2);
     bool isMapClear();
-    
+
     const int ROW = 7;
     const int COLUMN = 10;
 private:
