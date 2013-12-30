@@ -4,10 +4,6 @@
 #include <vector>
 #include "math.h"
 
-#include "cocos2d.h"
-
-USING_NS_CC;
-
 using namespace std;
 
 struct Grid {
@@ -48,8 +44,8 @@ public:
     Path match(int gridId1, int gridId2);
     bool isMapClear();
 
-    const int ROW = 7;
-    const int COLUMN = 10;
+    const static int ROW = 7;
+    const static int COLUMN = 10;
 private:
     int m_maps[7][10];
     int m_score;

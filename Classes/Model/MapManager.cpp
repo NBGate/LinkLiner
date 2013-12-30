@@ -1,5 +1,8 @@
 #include "MapManager.h"
 
+#include "cocos2d.h"
+USING_NS_CC;
+
 int g_maps[7][10] = {
     {0,0,0,0,0,0,0,0,0,0},
     {0,1,0,0,0,0,0,0,1,0},

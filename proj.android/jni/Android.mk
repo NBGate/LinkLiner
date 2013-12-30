@@ -11,7 +11,9 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/View/GameLayer.cpp \
                    ../../Classes/View/GridNode.cpp \
                    ../../Classes/Model/MapManager.cpp \
-                   ../../Classes/Controller/GameLogic.cpp
+                   ../../Classes/Model/Record.cpp \
+                   ../../Classes/Controller/GameLogic.cpp \
+                   ../../Classes/Utils/Utils.cpp
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 

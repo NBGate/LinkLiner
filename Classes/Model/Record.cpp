@@ -1,7 +1,16 @@
 #include "Record.h"
 #include <Utils/Utils.h>
 
+Record* Record::m_instance = NULL;
+
+Record* Record::instance() {
+    if (m_instance == NULL)
+        m_instance = new Record();
+    return m_instance;
+}
+
 Record::Record() {
+    m_mute = false;
     m_highscore = 0;
     m_dbPath = writablePath() + "save.db";
 }
@@ -23,6 +32,7 @@ bool Record::load() {
         delete[] name;
     }
     fread(&this->m_highscore, sizeof(uint32_t), 1, fp);
+    fread(&m_mute, sizeof(bool), 1, fp);
     fclose(fp);
     return true;
 }
@@ -38,6 +48,7 @@ bool Record::save() {
         fwrite(m_username.c_str(), sizeof(char), length, fp);
     }
     fwrite(&m_highscore, sizeof(uint32_t), 1, fp);
+    fwrite(&m_mute, sizeof(bool), 1, fp);
     fclose(fp);
     return true;
 }

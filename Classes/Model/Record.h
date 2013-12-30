@@ -7,7 +7,7 @@ using namespace std;
 
 class Record {
 public:
-    Record();
+    static Record* instance();
     virtual ~Record();
 
     bool load();
@@ -17,10 +17,15 @@ public:
     int getHighScore() const { return m_highscore; }
     void setUserName(string name) { m_username = name; }
     string getUserName() const { return m_username; }
+protected:
+    Record();
+    Record(const Record&) { }
 private:
-    int m_highscore;
     string m_username;
+    int m_highscore;
+    bool m_mute;
     string m_dbPath;
+    static Record* m_instance;
 };
 
 #endif // __Record_H__
