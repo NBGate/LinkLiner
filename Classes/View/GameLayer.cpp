@@ -25,7 +25,6 @@ bool GameLayer::init() {
     bool bRet = false;
     do {
         CCLayer::init();
-        CCLog("GameLayer::init");
         initView();
         initSound();
         m_gridNodeArray = CCNode::create();
@@ -58,16 +57,16 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
     CCObject* obj = NULL;
     CCARRAY_FOREACH(grids, obj) {
         GridNode* grid = (GridNode*)obj;
-        //CCLog("b %0.2f %0.2f",grid->boundingBox().size.width, grid->boundingBox().size.height);
-        //CCLog("origin %0.2f %0.2f",grid->boundingBox().origin.x, grid->boundingBox().origin.y);
-        //CCLog("location %0.2f %0.2f", location.x, location.y);
         if (grid->boundingBox().containsPoint(location)) {
             CCLog("ccTouchBegan::gtag %d\n", grid->getTag());
             m_logic->touchGrid(grid->getTag());
+            CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("choose.wav");
+            CCSprite* curSprite = (CCSprite *)grid->getChildByTag(ImageTag);
+            CCLog("ccTouchBegn::curSprite::%d", curSprite->getTag());
+            curSprite->setScale(0.6f);
             break;
         }
     }
-
     return true;
 }
 
@@ -91,31 +90,36 @@ void GameLayer::updateGridNode() {
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     for (int i = 0; i < cnt; i++) {
         Grid::Status status = grids[i]->status;
-        if (status == Grid::Normal) {
+        if (status == Grid::Normal || status == Grid::Select) {
             GridNode* node = GridNode::create();
             node->setTag(grids[i]->id);
             CCSprite *sprite = CCSprite::create(this->imageFilename(grids[i]->imageId)->getCString());
             sprite->setScale(0.5f);
+            if (status == Grid::Select) {
+                sprite->setScale(0.6f);
+            }
             sprite->setPosition(CCPoint(0,0));
             node->setContentSize(sprite->boundingBox().size);
             int x = origin.x  + OFFSET_X + grids[i]->col*SIZE_W;
             int y = origin.y  + OFFSET_Y - (grids[i]->row+1)*SIZE_H;
-            //CCLog("id=%d:x=%d,y=%d;row=%d,col=%d,bx=%.2f,by=%.2f", i+1, x, y,grids[i]->row,grids[i]->col,node->boundingBox().size.width, node->boundingBox().size.height);
-            //CCLog("b %0.2f %0.2f",node->boundingBox().size.width, node->boundingBox().size.height);
-            //CCLog("origin %0.2f %0.2f",node->boundingBox().origin.x, node->boundingBox().origin.y);
-            //CCNode::m_bIgnoreAnchorPointForPosition=false;
             sprite->setAnchorPoint(ccp(0, 0));
             node->setAnchorPoint(ccp(0, 0));
             node->setPosition(x, y);
-            node->addChild(sprite);
-
+            node->addChild(sprite, 0, ImageTag);
             m_gridNodeArray->addChild(node);
+            
+        } else if (status == Grid::Select) {
+            
         }
     }
 }
 
 cocos2d::CCString* GameLayer::imageFilename(int imageId) {
-    return cocos2d::CCString::createWithFormat("%d.png", imageId);
+    if (imageId >= 1 && imageId <= TOTAL_IMG){
+        return cocos2d::CCString::createWithFormat("%d.png",imageId);
+    }else{
+        return NULL;
+    }
 }
 
 

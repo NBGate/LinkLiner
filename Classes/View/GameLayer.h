@@ -9,6 +9,10 @@ class GameLogic;
 
 class GameLayer : public CCLayer {
 public:
+    enum NodeTags {
+        ImageTag = 0x00000000,
+    };
+public:
     GameLayer();
     ~GameLayer();
     virtual bool init();
