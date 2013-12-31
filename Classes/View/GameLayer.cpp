@@ -28,8 +28,6 @@ bool GameLayer::init() {
         CCLog("GameLayer::init");
         initView();
         initSound();
-        m_gridNodeArray = CCNode::create();
-        this->addChild(m_gridNodeArray);
         this->setTouchEnabled(true);
         this->setKeypadEnabled(true);
         scheduleUpdate();
@@ -44,6 +42,9 @@ void GameLayer::initView() {
     CCSprite* bgSprite = CCSprite::create("bg.png");
     bgSprite->setPosition(ccp(winSize.width/2, winSize.height/2));
     this->addChild(bgSprite);
+
+    m_gridNodeArray = CCNode::create();
+    this->addChild(m_gridNodeArray);
 }
 
 
@@ -86,20 +87,21 @@ void GameLayer::updateGridNode() {
     MapManager* map = m_logic->currentMap();
     if (map == NULL)
         return;
-    const MapManager::GridArray& grids = map->getGrids();
-    int cnt = grids.size();
+
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-    for (int i = 0; i < cnt; i++) {
-        Grid::Status status = grids[i]->status;
-        if (status == Grid::Normal) {
+    const MapManager::GridArray& grids = map->getGrids();
+    MapManager::GridArray::const_iterator pos = grids.begin();
+    for (; pos != grids.end(); ++pos) {
+        int status = pos->second->status;
+        if (status & Grid::Normal) {
             GridNode* node = GridNode::create();
-            node->setTag(grids[i]->id);
-            CCSprite *sprite = CCSprite::create(this->imageFilename(grids[i]->imageId)->getCString());
+            node->setTag(pos->second->id);
+            CCSprite *sprite = CCSprite::create(this->imageFilename(pos->second->imageId)->getCString());
             sprite->setScale(0.5f);
             sprite->setPosition(CCPoint(0,0));
             node->setContentSize(sprite->boundingBox().size);
-            int x = origin.x  + OFFSET_X + grids[i]->col*SIZE_W;
-            int y = origin.y  + OFFSET_Y - (grids[i]->row+1)*SIZE_H;
+            int x = origin.x  + OFFSET_X + pos->second->col*SIZE_W;
+            int y = origin.y  + OFFSET_Y - (pos->second->row+1)*SIZE_H;
             //CCLog("id=%d:x=%d,y=%d;row=%d,col=%d,bx=%.2f,by=%.2f", i+1, x, y,grids[i]->row,grids[i]->col,node->boundingBox().size.width, node->boundingBox().size.height);
             //CCLog("b %0.2f %0.2f",node->boundingBox().size.width, node->boundingBox().size.height);
             //CCLog("origin %0.2f %0.2f",node->boundingBox().origin.x, node->boundingBox().origin.y);

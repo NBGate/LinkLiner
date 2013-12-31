@@ -22,25 +22,22 @@ MapManager::~MapManager() {
 }
 
 Grid* MapManager::getGrid(int gridId) {
-    int len = m_grids.size();
-    for (int i = 0; i < len; i++) {
-        if(m_grids[i]->id == gridId) {
-            return m_grids[i];
-        }
-    }
+    if (m_grids.find(gridId) != m_grids.end())
+        return m_grids[gridId];
     return NULL;
 }
 
 Grid* MapManager::getSelectGrid() {
-    int len = m_grids.size();
-    for (int i = 0; i < len; i++) {
-        if(m_grids[i]->id == m_selectId) {
-            return m_grids[i];
-        }
-    }
-    return NULL;
+    return getGrid(m_selectId);
 }
 
+void MapManager::setSelectGrid(int gridId) {
+    if (m_grids.find(gridId) == m_grids.end())
+        return;
+
+    m_selectId = gridId;
+    m_grids[m_selectId]->status |= Grid::Select;
+}
 
 void MapManager::initManager() {
     memcpy(m_maps, g_maps, sizeof(m_maps));
@@ -50,7 +47,7 @@ void MapManager::initManager() {
     for(int i = 0; i < ROW; i++) {
         for(int j = 0; j < COLUMN; j++) {
             Grid* grid = new Grid();
-            grid->id = 1 + j + i * COLUMN;
+            grid->id = j + i * COLUMN;
             grid->row = i;
             grid->col = j;
             if (m_maps[i][j] != 0) {
@@ -59,7 +56,7 @@ void MapManager::initManager() {
                 grid->status = Grid::Empty;
             }
             grid->imageId = m_maps[i][j];
-            m_grids.push_back(grid);
+            m_grids.insert(pair<int, Grid*>(grid->id, grid));
         }
     }
 
@@ -99,6 +96,19 @@ MapManager::Path MapManager::match(int gridId1, int gridId2) {
     }
 
     return Path();
+}
+
+bool MapManager::linkGrid(int gridId1, int gridId2) {
+    Path p = match(gridId1, gridId2);
+    if (p.size() > 0) {
+        Match m;
+        m.head = gridId1;
+        m.tail = gridId2;
+        m.path = p;
+        m_matchQueue.push(m);
+        return true;
+    }
+    return false;
 }
 
 bool MapManager::matchLine(int gridId1, int gridId2) {
@@ -169,7 +179,7 @@ bool MapManager::matchThreeLine(int gridId1, int gridId2) {
     return false;
 }
 
-bool MapManager::isRowEmpty(int row, int col1, int col2){
+bool MapManager::isRowEmpty(int row, int col1, int col2) {
     //水平方向上能否消除
     if( abs(col1 - col2) <= 1 ) {
         return true;
@@ -326,9 +336,9 @@ vector<int> MapManager::getVerticalEmpty(int gridId) {
 }
 
 bool MapManager::isMapClear() {
-    int len = m_grids.size();
-    for (int i = 0; i < len; i++) {
-        if(m_grids[i]->status != Grid::Empty) {
+    GridArray::iterator pos = m_grids.begin();
+    for (; pos != m_grids.end(); ++pos) {
+        if(pos->second->status != Grid::Empty) {
             return false;
         }
     }
