@@ -345,5 +345,9 @@ bool MapManager::isMapClear() {
     return true;
 }
 
-
+MapManager::Match MapManager::getMatch() {
+    Match m = m_matchQueue.front();
+    m_matchQueue.pop();
+    return m;
+}
 

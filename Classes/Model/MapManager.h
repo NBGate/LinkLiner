@@ -53,7 +53,7 @@ public:
     Path match(int gridId1, int gridId2);
     bool linkGrid(int gridId1, int gridId2);
     bool isMapClear();
-    Match getMatch() const;
+    Match getMatch();
 
     const static int ROW = 7;
     const static int COLUMN = 10;
