@@ -10,6 +10,7 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/AppDelegate.cpp \
                    ../../Classes/View/GameLayer.cpp \
                    ../../Classes/View/GridNode.cpp \
+                   ../../Classes/View/MenuScene.cpp \
                    ../../Classes/Model/MapManager.cpp \
                    ../../Classes/Model/Record.cpp \
                    ../../Classes/Controller/GameLogic.cpp \

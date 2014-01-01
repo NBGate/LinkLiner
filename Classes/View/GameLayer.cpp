@@ -27,8 +27,6 @@ bool GameLayer::init() {
         CCLayer::init();
         initView();
         initSound();
-        m_gridNodeArray = CCNode::create();
-        this->addChild(m_gridNodeArray);
         this->setTouchEnabled(true);
         this->setKeypadEnabled(true);
         scheduleUpdate();
@@ -43,6 +41,9 @@ void GameLayer::initView() {
     CCSprite* bgSprite = CCSprite::create("bg.png");
     bgSprite->setPosition(ccp(winSize.width/2, winSize.height/2));
     this->addChild(bgSprite);
+
+    m_gridNodeArray = CCNode::create();
+    this->addChild(m_gridNodeArray);
 }
 
 
@@ -61,9 +62,9 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
             CCLog("ccTouchBegan::gtag %d\n", grid->getTag());
             m_logic->touchGrid(grid->getTag());
             CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("choose.wav");
-            CCSprite* curSprite = (CCSprite *)grid->getChildByTag(ImageTag);
-            CCLog("ccTouchBegn::curSprite::%d", curSprite->getTag());
-            curSprite->setScale(0.6f);
+//            CCSprite* curSprite = (CCSprite *)grid->getChildByTag(ImageTag);
+//            CCLog("ccTouchBegn::curSprite::%d", curSprite->getTag());
+//            curSprite->setScale(0.6f);
             break;
         }
     }
@@ -85,31 +86,34 @@ void GameLayer::updateGridNode() {
     MapManager* map = m_logic->currentMap();
     if (map == NULL)
         return;
-    const MapManager::GridArray& grids = map->getGrids();
-    int cnt = grids.size();
+
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-    for (int i = 0; i < cnt; i++) {
-        Grid::Status status = grids[i]->status;
-        if (status == Grid::Normal || status == Grid::Select) {
+
+    const MapManager::GridArray& grids = map->getGrids();
+    MapManager::GridArray::const_iterator pos = grids.begin();
+    for (; pos != grids.end(); ++pos) {
+        int status = pos->second->status;
+        if (status & Grid::Normal) {
             GridNode* node = GridNode::create();
-            node->setTag(grids[i]->id);
-            CCSprite *sprite = CCSprite::create(this->imageFilename(grids[i]->imageId)->getCString());
+            node->setTag(pos->second->id);
+            CCSprite *sprite = CCSprite::create(this->imageFilename(pos->second->imageId)->getCString());
             sprite->setScale(0.5f);
             if (status == Grid::Select) {
+                CCLog("Select1 Id: %d", pos->second->id);
                 sprite->setScale(0.6f);
             }
             sprite->setPosition(CCPoint(0,0));
             node->setContentSize(sprite->boundingBox().size);
-            int x = origin.x  + OFFSET_X + grids[i]->col*SIZE_W;
-            int y = origin.y  + OFFSET_Y - (grids[i]->row+1)*SIZE_H;
+            int x = origin.x  + OFFSET_X + pos->second->col*SIZE_W;
+            int y = origin.y  + OFFSET_Y - (pos->second->row+1)*SIZE_H;
             sprite->setAnchorPoint(ccp(0, 0));
             node->setAnchorPoint(ccp(0, 0));
             node->setPosition(x, y);
             node->addChild(sprite, 0, ImageTag);
             m_gridNodeArray->addChild(node);
             
-        } else if (status == Grid::Select) {
-            
+        } else if (status & Grid::Select) {
+            CCLog("Select2 Id: %d", pos->second->id);
         }
     }
 }
