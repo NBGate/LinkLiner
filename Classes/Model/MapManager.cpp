@@ -5,16 +5,93 @@ USING_NS_CC;
 
 int g_maps[7][10] = {
     {0,0,0,0,0,0,0,0,0,0},
-    {0,1,0,0,0,0,0,0,1,0},
     {0,0,0,0,0,0,0,0,0,0},
-    {0,1,3,0,1,0,3,2,1,0},
     {0,0,0,0,0,0,0,0,0,0},
-    {0,2,0,0,0,0,0,0,1,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
+    {0,0,0,0,0,0,0,0,0,0},
     {0,0,0,0,0,0,0,0,0,0}
 };
 
+int g_counts[40] = {
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1,
+    1, 1, 1, 1, 1, 1, 1, 1
+};
+
+
+int g_images[20][2] = {
+    {10, 3},
+    {12, 3},
+    {14, 4},
+    {16, 4},
+    {20, 4},
+    {22, 5},
+    {24, 5},
+    {26, 5},
+    {28, 5},
+    {30, 6},
+    {32, 6},
+    {34, 6},
+    {36, 6},
+    {38, 7},
+    {40, 7},
+    {40, 8},
+    {40, 8},
+    {40, 9},
+    {40, 9},
+    {40, 10}
+};
+
 MapManager::MapManager() {
+    initMap(1);
     initManager();
+}
+
+MapManager::MapManager(int level) {
+    initMap(level);
+    initManager();
+}
+
+void MapManager::initMap(int level) {
+    memcpy(m_maps, g_maps, sizeof(g_maps));
+    vector<int> v_counts;
+    for (int i = 0; i < 40; i++) {
+        v_counts.push_back(i);
+    }
+    
+    m_imageTypeCount = g_images[level-1][1];
+    m_gridCount = g_images[level-1][0];
+    
+    int tempTypeCount = m_imageTypeCount;
+    int tempType;
+    int tempCount = m_gridCount;
+    
+    srand((int)time(0));
+    for (int count = 0; count < (ROW - 2) * (COLUMN - 2); count++) {
+        if (tempCount <= 0) break;
+        if ((count % 2) == 0) { //确保生成同样的个数是偶数
+            if (tempTypeCount > 0) { //确保所有图像都能用上
+                tempType = tempTypeCount;
+                tempTypeCount--;
+            }
+            else
+            {
+                tempType = random(m_imageTypeCount) + 1;
+            }
+        }
+        int pos = random(v_counts.size());
+        int randPos = v_counts[pos];
+        int row = randPos / 8;
+        int col = randPos % 8;
+        m_maps[row+1][col+1] = tempType;
+        vector<int>::iterator iter;
+        iter = remove(v_counts.begin(), v_counts.end(), randPos);
+        v_counts.erase(iter);
+        tempCount--;
+    }
 }
 
 MapManager::~MapManager() {
@@ -40,7 +117,6 @@ void MapManager::setSelectGrid(int gridId) {
 }
 
 void MapManager::initManager() {
-    memcpy(m_maps, g_maps, sizeof(m_maps));
 
     m_selectId = -1;
 
@@ -82,20 +158,13 @@ MapManager::Path MapManager::match(int gridId1, int gridId2) {
         m_path.push_back(gridId1);
         m_path.push_back(gridId2);
         CCLog("MapManager::matchLine done");
-        return m_path;
-    }
-
-    if (matchTwoLine(gridId1, gridId2)) {
+    } else if (matchTwoLine(gridId1, gridId2)) {
         CCLog("MapManager::matchTwoLine done");
-        return m_path;
-    }
-
-    if (matchThreeLine(gridId1, gridId2)) {
+    } else if (matchThreeLine(gridId1, gridId2)) {
         CCLog("MapManager::matchThreeLine done");
-        return m_path;
     }
 
-    return Path();
+    return m_path;
 }
 
 bool MapManager::linkGrid(int gridId1, int gridId2) {
@@ -147,6 +216,9 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
     //得到矩形区域的另外两个点
     int pos = g2->col + g1->row * COLUMN;
     Grid* g3 = m_grids[pos];
+    if (g3->status != Grid::Empty) {
+        return false;
+    }
     if ( matchLine(g1->id, g3->id) && matchLine(g2->id, g3->id) ) {
         m_path.push_back(gridId1);
         m_path.push_back(g3->id);
@@ -156,6 +228,9 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
 
     pos = g1->col + g2->row * COLUMN;
     Grid* g4 = m_grids[pos];
+    if (g4->status != Grid::Empty) {
+        return false;
+    }
     if ( matchLine(g1->id, g4->id) && matchLine(g2->id, g4->id) ) {
         m_path.push_back(gridId1);
         m_path.push_back(g4->id);
@@ -209,14 +284,14 @@ bool MapManager::isColEmpty(int col, int row1, int row2) {
     }
     if( row1 < row2 ) {
         for (int i = row1 + 1; i < row2; i++) {
-            int pos = col + i * ROW;
+            int pos = col + i * COLUMN;
             if ( m_grids[pos]->status != Grid::Empty ) {
                 return false;
             }
         }
     } else {
         for (int i = row2 + 1; i < row1; i++) {
-            int pos = col + i * ROW;
+            int pos = col + i * COLUMN;
             if ( m_grids[pos]->status != Grid::Empty ) {
                 return false;
             }
@@ -293,7 +368,7 @@ vector<int> MapManager::getHorizontalEmpty(int gridId) {
     Grid* grid = this->getGrid(gridId);
     int pos;
     for (int i = grid->col - 1; i >= 0; i--) {
-        pos = i + grid->row * ROW;
+        pos = i + grid->row * COLUMN;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
@@ -301,7 +376,7 @@ vector<int> MapManager::getHorizontalEmpty(int gridId) {
         }
     }
     for (int i = grid->col + 1; i < COLUMN; i++) {
-        pos = i + grid->row * ROW;
+        pos = i + grid->row * COLUMN;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
@@ -317,15 +392,15 @@ vector<int> MapManager::getVerticalEmpty(int gridId) {
     Grid* grid = this->getGrid(gridId);
     int pos;
     for (int i = grid->row - 1; i >= 0; i--) {
-        pos = grid->col + i * ROW;
+        pos = grid->col + i * COLUMN;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
             break;
         }
     }
-    for (int i = grid->row + 1; i < COLUMN; i++) {
-        pos = grid->col + i * ROW;
+    for (int i = grid->row + 1; i < ROW; i++) {
+        pos = grid->col + i * COLUMN;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
