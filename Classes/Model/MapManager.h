@@ -54,6 +54,7 @@ public:
     Path match(int gridId1, int gridId2);
     bool linkGrid(int gridId1, int gridId2);
     bool isMapClear();
+    bool linkable();
     Match getMatch();
 
     const static int ROW = 7;

@@ -46,7 +46,7 @@ int g_images[20][2] = {
 };
 
 MapManager::MapManager() {
-    initMap(11);
+    initMap(20);
     initManager();
 }
 
@@ -92,6 +92,7 @@ void MapManager::initMap(int level) {
         v_counts.erase(iter);
         tempCount--;
     }
+    cout<<"can link:"<<linkable()<<endl;
 }
 
 MapManager::~MapManager() {
@@ -427,5 +428,22 @@ MapManager::Match MapManager::getMatch() {
     Match m = m_matchQueue.front();
     m_matchQueue.pop();
     return m;
+}
+
+bool MapManager::linkable() {
+    int len = m_grids.size();
+    for (int i = 0; i < len; i++) {
+        for (int j = i + 1; j < len; j++) {
+            if (m_grids[i]->status == Grid::Empty || m_grids[j]->status == Grid::Empty) {
+                continue;
+            }
+            if (m_grids[i]->imageId == m_grids[j]->imageId) {
+                Path p = match(m_grids[i]->id, m_grids[j]->id);
+                if (p.size() > 0) {
+                    return true;
+                }
+            }
+        }
+    }
 }
 
