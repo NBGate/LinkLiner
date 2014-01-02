@@ -36,6 +36,7 @@ public:
     typedef queue<Match> MatchQueue;
 
     MapManager();
+    MapManager(int level);
     virtual ~MapManager();
 
     int getScore() const { return m_score; }
@@ -53,12 +54,15 @@ public:
     Path match(int gridId1, int gridId2);
     bool linkGrid(int gridId1, int gridId2);
     bool isMapClear();
+    bool linkable();
     Match getMatch();
 
     const static int ROW = 7;
     const static int COLUMN = 10;
 private:
     int m_maps[7][10];
+    int m_imageTypeCount;
+    int m_gridCount;
     int m_score;
     int m_stage;
     int m_selectId;
@@ -67,6 +71,7 @@ private:
     MatchQueue m_matchQueue;
     GridArray m_grids;
     void initManager();
+    void initMap(int level = 1);
     bool matchLine(int gridId1, int gridId2);
     bool matchTwoLine(int gridId1, int gridId2);
     bool matchThreeLine(int gridId1, int gridId2);
@@ -76,6 +81,7 @@ private:
     bool matchVertical(int gridId1, int gridId2);
     vector<int> getHorizontalEmpty(int gridId);
     vector<int> getVerticalEmpty(int gridId);
+    int random(int size) {return rand()%size;};
 };
 
 #endif // __MapManager_H__
