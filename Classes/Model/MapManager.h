@@ -50,6 +50,7 @@ public:
     Grid* getGrid(int gridId);
     Grid* getSelectGrid();
     void setSelectGrid(int gridid);
+    void clearSelectGrid();
 
     Path match(int gridId1, int gridId2);
     bool linkGrid(int gridId1, int gridId2);
