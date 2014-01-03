@@ -48,6 +48,7 @@ void GameLogic::touchGrid(int gridId) {
     else {
         printf("touchGrid:: %d %d\n", grid->id, gridId);
         if (m_currentMap->linkGrid(grid->id, gridId) == false) {
+            m_currentMap->clearSelectGrid();
             m_currentMap->setSelectGrid(gridId);
         }
         else {

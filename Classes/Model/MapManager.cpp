@@ -113,11 +113,15 @@ Grid* MapManager::getSelectGrid() {
 }
 
 void MapManager::setSelectGrid(int gridId) {
-//    if (m_grids.find(gridId) == m_grids.end())
-//        return;
+    if (m_grids.find(gridId) == m_grids.end())
+        return;
 
     m_selectId = gridId;
-//    m_grids[m_selectId]->status |= Grid::Select;
+    m_grids[m_selectId]->status |= Grid::Select;
+}
+
+void MapManager::clearSelectGrid() {
+    m_grids[m_selectId]->status &= !Grid::Select;
 }
 
 void MapManager::initManager() {
