@@ -4,6 +4,7 @@
 #include <map>
 #include <vector>
 #include <queue>
+#include <cstdlib>
 #include "math.h"
 
 using namespace std;

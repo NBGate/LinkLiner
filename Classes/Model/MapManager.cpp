@@ -1,4 +1,5 @@
 #include "MapManager.h"
+#include <algorithm>
 
 #include "cocos2d.h"
 USING_NS_CC;
@@ -121,7 +122,10 @@ void MapManager::setSelectGrid(int gridId) {
 }
 
 void MapManager::clearSelectGrid() {
-    m_grids[m_selectId]->status &= !Grid::Select;
+    if (m_grids.find(m_selectId) == m_grids.end())
+        return;
+
+    m_grids[m_selectId]->status &= ~Grid::Select;
 }
 
 void MapManager::initManager() {
