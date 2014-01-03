@@ -46,14 +46,12 @@ void GameLogic::touchGrid(int gridId) {
         m_currentMap->setSelectGrid(gridId);
     }
     else {
-        CCLog("touchGrid:: %d %d\n", grid->id, gridId);
         if (m_currentMap->linkGrid(grid->id, gridId) == false) {
-            CCLog("setSelectGrid %d clear grid selected %d\n", gridId, grid->id);
             m_currentMap->clearSelectGrid();
             m_currentMap->setSelectGrid(gridId);
         }
         else {
-            CCLog("match grid %d %d\n", gridId, grid->id);
+            m_currentMap->clearSelectGrid();
             grid->status = Grid::Empty;
             m_currentMap->getGrid(gridId)->status = Grid::Empty;
             m_currentMap->setSelectGrid(-1);

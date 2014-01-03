@@ -62,14 +62,14 @@ void MapManager::initMap(int level) {
     for (int i = 0; i < 40; i++) {
         v_counts.push_back(i);
     }
-    
+
     m_imageTypeCount = g_images[level-1][1];
     m_gridCount = g_images[level-1][0];
-    
+
     int tempTypeCount = m_imageTypeCount;
     int tempType;
     int tempCount = m_gridCount;
-    
+
     srand((int)time(0));
     for (int count = 0; count < (ROW - 2) * (COLUMN - 2); count++) {
         if (tempCount <= 0) break;
