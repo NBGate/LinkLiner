@@ -26,7 +26,6 @@ public:
     
 private:
     void updateGridNode();
-    cocos2d::CCString* imageFilename(int);
     void initSound();
     void initView();
     

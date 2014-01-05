@@ -8,6 +8,7 @@
 
 #include "AppDelegate.h"
 
+#include "Config.h"
 #include "cocos2d.h"
 #include "SimpleAudioEngine.h"
 #include <View/MenuScene.h>
@@ -28,8 +29,16 @@ bool AppDelegate::applicationDidFinishLaunching() {
     CCDirector *pDirector = CCDirector::sharedDirector();
     pDirector->setOpenGLView(CCEGLView::sharedOpenGLView());
     CCSize screenSize = CCEGLView::sharedOpenGLView()->getFrameSize();
-    CCSize designSize = CCSizeMake(800, 480);
+    CCSize designSize = CCSizeMake(DESIGNED_WIDTH, DESIGNED_HEIGHT);
     CCEGLView::sharedOpenGLView()->setDesignResolutionSize(designSize.width, designSize.height, kResolutionShowAll);
+
+    std::vector<std::string> searchPaths;
+    searchPaths.push_back("fonts");
+    searchPaths.push_back("music");
+    CCFileUtils::sharedFileUtils()->setSearchPaths(searchPaths);
+
+    CCSpriteFrameCache* cacher = CCSpriteFrameCache::sharedSpriteFrameCache();
+    cacher->addSpriteFramesWithFile("link.plist");
 
     // turn on display FPS
     pDirector->setDisplayStats(true);

@@ -5,7 +5,6 @@
 
 USING_NS_CC;
 
-class GameLogic;
 struct Grid;
 
 class GridNode : public CCNode {
@@ -14,6 +13,16 @@ public:
     ~GridNode();
     virtual bool init();
     CREATE_FUNC(GridNode);
+
+    void updateGrid(Grid* grid);
+
+private:
+    void showSelectAnimation();
+    void hideSelectAnimation();
+private:
+    Grid*           m_grid;
+    CCSprite*       m_gridSprite;
+    CCAnimation*    m_selectAnimatoin;
 };
 
 #endif // __GridNode_H_
