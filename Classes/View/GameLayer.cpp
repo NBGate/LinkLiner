@@ -90,7 +90,7 @@ void GameLayer::updateGridNode() {
     MapManager::GridArray::const_iterator pos = grids.begin();
     for (; pos != grids.end(); ++pos) {
         Grid* grid = pos->second;
-        int status = grid->status;
+        //int status = grid->status;
         int index = grid->row * TOTAL_COl + grid->col;
         m_gridNodeArray[index]->updateGrid(pos->second);
     }

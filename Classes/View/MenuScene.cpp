@@ -1,10 +1,3 @@
-//
-//  MenuScene.cpp
-//  LinkLinker
-//
-//  Created by jun on 13-8-11.
-//
-//
 
 #include "MenuScene.h"
 #include "SimpleAudioEngine.h"
@@ -61,11 +54,12 @@ bool Menu::init()
     this->addChild(pSprite, 0);
     
     CCLabelTTF* label = CCLabelTTF::create("连连看", "Marker Felt", 48);
-	label->setPosition(  ccp( size.width /2 , size.height/2 ) );
+	label->setPosition(  ccp(size.width /2 , size.height/2 + 80) );
     this->addChild(label, 1);
-	
+    CCActionInterval* blinkAtion = CCBlink::create(3, 3);
 	CCSprite* button = CCSprite::create("play.png");
-    button->setPosition(  ccp(size.width/2, size.height/2 - 80) );
+    button->setPosition(  ccp(size.width/2, size.height/2) );
+    button->runAction(blinkAtion);
     this->addChild(button, 2);
 	this->setTouchEnabled(true);
     
@@ -74,6 +68,11 @@ bool Menu::init()
 
 bool Menu::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
+    //CCActionInterval* actionTo = CCScaleTo::create(2.0f, 0.5f);
+    //CCActionInterval* actionBy = CCScaleTo::create(2.0f, 1.0f, 10.0f);
+    //CCActionInterval* actionBy2 = CCScaleTo::create(2.0f, 5.0f, 1.0f);
+    //this->getChildByTag(2)->runAction(CCSequence::create(actionBy, actionBy->reverse(), NULL));
+    
     if(!this->isEnter){
         this->scheduleOnce(schedule_selector(Menu::playGame), 0);
         this->isEnter = true;
