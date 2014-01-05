@@ -439,6 +439,8 @@ bool MapManager::isMapClear() {
 }
 
 MapManager::Match MapManager::getMatch() {
+    if (m_matchQueue.size() <= 0)
+        return Match();
     Match m = m_matchQueue.front();
     m_matchQueue.pop();
     return m;
