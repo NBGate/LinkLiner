@@ -1,11 +1,13 @@
 #ifndef __GameLayer_H_
 #define __GameLayer_H_
 
-#include "cocos2d.h"
+#include <Config.h>
+#include <cocos2d.h>
 
 USING_NS_CC;
 
 class GameLogic;
+class GridNode;
 
 class GameLayer : public CCLayer {
 public:
@@ -30,7 +32,7 @@ private:
     void initView();
     
 private:
-    CCNode* m_gridNodeArray;
+    GridNode* m_gridNodeArray[TOTAL_ROW*TOTAL_COl];
     GameLogic* m_logic;
 };
 

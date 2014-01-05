@@ -17,6 +17,9 @@ struct Grid {
         Empty       = 0x00000004,
         Edge        = 0x10000000
     };
+    bool visible() const {
+        return !((status & InValid) || (status & Empty) || (status & Edge));
+    }
     int row;
     int col;
     int status;

@@ -1,15 +1,9 @@
 #include <Config.h>
 #include "GameLayer.h"
+#include "GridNode.h"
 #include <SimpleAudioEngine.h>
-#include <View/GridNode.h>
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
-
-#define OFFSET_X							210
-#define OFFSET_Y							380
-#define TOTAL_ROWS							7
-#define TOTAL_COlS                          10
-#define TOTAL_IMG							16
 
 GameLayer::GameLayer() {
     m_logic = new GameLogic();
@@ -36,13 +30,26 @@ bool GameLayer::init() {
 }
 
 void GameLayer::initView() {
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    CCSprite* bgSprite = CCSprite::create("bg.png");
-    bgSprite->setPosition(ccp(winSize.width/2, winSize.height/2));
+    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+
+    CCSprite* bgSprite = CCSprite::createWithSpriteFrameName("bg.png");
+    bgSprite->setPosition(CCPoint(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
+    bgSprite->setAnchorPoint(CCPoint(0.5, 0.5));
+    bgSprite->setRotation(90);
     this->addChild(bgSprite);
 
-    m_gridNodeArray = CCNode::create();
-    this->addChild(m_gridNodeArray);
+    for (int i = 0; i < TOTAL_ROW; i++) {
+        for (int j = 0; j < TOTAL_COl; j++) {
+            GridNode* node = GridNode::create();
+            node->setAnchorPoint(ccp(0, 0));
+            float x = origin.x + GRID_ORIGIN_X + j * GRID_SPACING;
+            float y = origin.y + GRID_ORIGIN_Y + i * GRID_SPACING;
+            node->setPosition(x, y);
+            this->addChild(node);
+            m_gridNodeArray[i * TOTAL_COl + j] = node;
+        }
+    }
 }
 
 
@@ -53,12 +60,9 @@ void GameLayer::initSound() {
 
 bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
     CCPoint location = pTouch->getLocation();
-    CCArray* grids = m_gridNodeArray->getChildren();
-    CCObject* obj = NULL;
-    CCARRAY_FOREACH(grids, obj) {
-        GridNode* grid = (GridNode*)obj;
-        if (grid->boundingBox().containsPoint(location)) {
-            CCLog("ccTouchBegan::gtag %d\n", grid->getTag());
+    for (int i = 0; i < TOTAL_ROW * TOTAL_COl; i++) {
+        GridNode* grid = m_gridNodeArray[i];
+        if (grid->isVisible() && grid->boundingBox().containsPoint(location)) {
             m_logic->touchGrid(grid->getTag());
             CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("choose.wav");
             break;
@@ -78,26 +82,17 @@ void GameLayer::update(float delta) {
 }
 
 void GameLayer::updateGridNode() {
-    m_gridNodeArray->removeAllChildren();
     MapManager* map = m_logic->currentMap();
     if (map == NULL)
         return;
 
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-
     const MapManager::GridArray& grids = map->getGrids();
     MapManager::GridArray::const_iterator pos = grids.begin();
     for (; pos != grids.end(); ++pos) {
-        int status = pos->second->status;
-        if (status & Grid::Normal || status & Grid::Select) {
-            GridNode* node = GridNode::create();
-            int x = origin.x  + OFFSET_X + pos->second->col * GRID_WIDTH;
-            int y = origin.y  + OFFSET_Y - (pos->second->row+1) * GRID_HEIGHT;
-            node->setAnchorPoint(ccp(0, 0));
-            node->setPosition(x, y);
-            node->updateGrid(pos->second);
-            m_gridNodeArray->addChild(node);
-        }
+        Grid* grid = pos->second;
+        int status = grid->status;
+        int index = grid->row * TOTAL_COl + grid->col;
+        m_gridNodeArray[index]->updateGrid(pos->second);
     }
 }
 

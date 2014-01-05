@@ -52,9 +52,11 @@ bool Menu::init()
     
     // ask director the window size
     CCSize size = CCDirector::sharedDirector()->getWinSize();
-    CCSprite* pSprite = CCSprite::create("bg.png");
+    CCSprite* pSprite = CCSprite::createWithSpriteFrameName("bg.png");
     // position the sprite on the center of the screen
     pSprite->setPosition( ccp(size.width/2, size.height/2) );
+    pSprite->setAnchorPoint(CCPoint(0.5, 0.5));
+    pSprite->setRotation(90);
     // add the sprite as a child to this layer
     this->addChild(pSprite, 0);
     

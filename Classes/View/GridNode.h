@@ -22,7 +22,8 @@ private:
 private:
     Grid*           m_grid;
     CCSprite*       m_gridSprite;
-    CCAnimation*    m_selectAnimatoin;
+    CCSprite*       m_animSprite;
+    CCAnimate*      m_selectAnimate;
 };
 
 #endif // __GridNode_H_

@@ -2,7 +2,7 @@
 #include "GridNode.h"
 #include <Model/MapManager.h>
 
-#define SELECT_ACTION_TAG   0
+#define SELECT_ACTION_TAG   10
 
 GridNode::GridNode() {
 }
@@ -17,20 +17,27 @@ bool GridNode::init() {
         this->setContentSize(CCSize(GRID_WIDTH, GRID_HEIGHT));
 
         m_gridSprite = CCSprite::create();
-        m_gridSprite->setAnchorPoint(CCPoint(0, 0));
-        m_gridSprite->setPosition(CCPoint(0, 0));
-        this->addChild(m_gridSprite);
+        m_gridSprite->setAnchorPoint(CCPoint(0.5, 0.5));
+        m_gridSprite->setPosition(CCPoint(GRID_WIDTH / 2, GRID_HEIGHT / 2));
+        this->addChild(m_gridSprite, 10);
 
-        m_selectAnimatoin = CCAnimation::create();
+        m_animSprite = CCSprite::create();
+        m_animSprite->setAnchorPoint(CCPoint(0.5, 0.5));
+        m_animSprite->setPosition(CCPoint(GRID_WIDTH / 2, GRID_HEIGHT / 2));
+        m_animSprite->setVisible(false);
+        this->addChild(m_animSprite, 0);
+
+        CCAnimation* selectAnimatoin = CCAnimation::create();
         CCString* frame;
         for (int i = 0; i < 5; i++) {
             frame = CCString::createWithFormat("select_frame_%d.png", i);
-            m_selectAnimatoin->addSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame->getCString()));
+            selectAnimatoin->addSpriteFrame(CCSpriteFrameCache::sharedSpriteFrameCache()->spriteFrameByName(frame->getCString()));
         }
-        m_selectAnimatoin->setDelayPerUnit(0.5f / 5.0f);
-        m_selectAnimatoin->setRestoreOriginalFrame(true);
-        m_selectAnimatoin->setLoops(true);
-        m_selectAnimatoin->retain();
+        selectAnimatoin->setDelayPerUnit(0.5f / 5.0f);
+        selectAnimatoin->setLoops(true);
+        m_selectAnimate = CCAnimate::create(selectAnimatoin);
+        m_selectAnimate->setTag(SELECT_ACTION_TAG);
+        m_selectAnimate->retain();
 
         bRet = true;
     } while (0);
@@ -39,15 +46,21 @@ bool GridNode::init() {
 }
 
 void GridNode::updateGrid(Grid* grid) {
-    m_grid = grid;
-    if (m_grid == NULL) {
+    if (grid == NULL) {
+        m_grid = NULL;
         this->setVisible(false);
         return;
     }
-    this->setVisible(true);
-    setTag(m_grid->id);
-    m_gridSprite->initWithSpriteFrameName(CCString::createWithFormat("%d.png",m_grid->id)->getCString());
-    if (m_grid->status & Grid::Select) {
+
+    if (m_grid != grid) {
+        m_grid = grid;
+        setTag(m_grid->id);
+        if (m_grid->visible())
+            m_gridSprite->initWithSpriteFrameName(CCString::createWithFormat("%d.png", m_grid->imageId)->getCString());
+    }
+
+    this->setVisible(m_grid->visible());
+    if ((m_grid->status & Grid::Select)) {
         showSelectAnimation();
     }
     else {
@@ -56,11 +69,18 @@ void GridNode::updateGrid(Grid* grid) {
 }
 
 void GridNode::showSelectAnimation() {
-    CCAnimate *action = CCAnimate::create(m_selectAnimatoin);
-    action->setTag(SELECT_ACTION_TAG);
-    m_gridSprite->runAction(action);
+    if (m_animSprite->isVisible())
+        return;
+
+    CCLog("showSelectAnimation");
+    m_animSprite->setVisible(true);
+    m_animSprite->runAction(m_selectAnimate);
 }
 
 void GridNode::hideSelectAnimation() {
-    m_gridSprite->stopActionByTag(SELECT_ACTION_TAG);
+    if (m_animSprite->isVisible() == false)
+        return;
+
+    m_animSprite->stopActionByTag(SELECT_ACTION_TAG);
+    m_animSprite->setVisible(false);
 }
