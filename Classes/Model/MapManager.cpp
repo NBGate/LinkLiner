@@ -47,7 +47,7 @@ int g_images[20][2] = {
 };
 
 MapManager::MapManager() {
-    initMap(20);
+    initMap(1);
     initManager();
 }
 
