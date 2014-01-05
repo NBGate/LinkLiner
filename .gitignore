@@ -13,8 +13,6 @@ local.properties
 
 *.xcscheme
 
-*.plist
-
 proj.ios/LinkLiner.xcodeproj/project.pbxproj
 
 proj.ios/LinkLiner.xcodeproj/project.pbxproj
