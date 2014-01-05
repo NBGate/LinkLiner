@@ -14,4 +14,9 @@
 #define TOTAL_COl           10
 #define TOTAL_IMG           16
 
+//连一次的基本分数
+#define BASE_SCORE          100
+//连击一次的基本分，多次直接乘以基本连击分值
+#define DOUBLE_HIT_SCORE    50
+
 #endif // __CONFIG_H_

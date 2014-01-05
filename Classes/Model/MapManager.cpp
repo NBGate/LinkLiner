@@ -1,3 +1,4 @@
+#include <Config.h>
 #include "MapManager.h"
 #include <algorithm>
 
@@ -71,7 +72,7 @@ void MapManager::initMap(int level) {
     int tempCount = m_gridCount;
 
     srand((int)time(0));
-    for (int count = 0; count < (ROW - 2) * (COLUMN - 2); count++) {
+    for (int count = 0; count < (TOTAL_ROW - 2) * (TOTAL_COl - 2); count++) {
         if (tempCount <= 0) break;
         if ((count % 2) == 0) { //确保生成同样的个数是偶数
             if (tempTypeCount > 0) { //确保所有图像都能用上
@@ -138,10 +139,10 @@ void MapManager::clearSelectGrid() {
 void MapManager::initManager() {
     m_selectId = -1;
 
-    for(int i = 0; i < ROW; i++) {
-        for(int j = 0; j < COLUMN; j++) {
+    for(int i = 0; i < TOTAL_ROW; i++) {
+        for(int j = 0; j < TOTAL_COl; j++) {
             Grid* grid = new Grid();
-            grid->id = j + i * COLUMN;
+            grid->id = j + i * TOTAL_COl;
             grid->row = i;
             grid->col = j;
             if (m_maps[i][j] != 0) {
@@ -231,7 +232,7 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
     }
 
     //得到矩形区域的另外两个点
-    int pos = g2->col + g1->row * COLUMN;
+    int pos = g2->col + g1->row * TOTAL_COl;
     Grid* g3 = m_grids[pos];
     if (g3->status != Grid::Empty) {
         return false;
@@ -243,7 +244,7 @@ bool MapManager::matchTwoLine(int gridId1, int gridId2) {
         return true;
     }
 
-    pos = g1->col + g2->row * COLUMN;
+    pos = g1->col + g2->row * TOTAL_COl;
     Grid* g4 = m_grids[pos];
     if (g4->status != Grid::Empty) {
         return false;
@@ -278,14 +279,14 @@ bool MapManager::isRowEmpty(int row, int col1, int col2) {
     }
     if( col1 < col2 ) {
         for (int i = col1 + 1; i < col2; i++) {
-            int pos = i + row * COLUMN;
+            int pos = i + row * TOTAL_COl;
             if ( m_grids[pos]->status != Grid::Empty ) {
                 return false;
             }
         }
     } else {
         for (int i = col2 + 1; i < col1; i++) {
-            int pos = i + row * COLUMN;
+            int pos = i + row * TOTAL_COl;
             if ( m_grids[pos]->status != Grid::Empty ) {
                 return false;
             }
@@ -301,14 +302,14 @@ bool MapManager::isColEmpty(int col, int row1, int row2) {
     }
     if( row1 < row2 ) {
         for (int i = row1 + 1; i < row2; i++) {
-            int pos = col + i * COLUMN;
+            int pos = col + i * TOTAL_COl;
             if ( m_grids[pos]->status != Grid::Empty ) {
                 return false;
             }
         }
     } else {
         for (int i = row2 + 1; i < row1; i++) {
-            int pos = col + i * COLUMN;
+            int pos = col + i * TOTAL_COl;
             if ( m_grids[pos]->status != Grid::Empty ) {
                 return false;
             }
@@ -385,15 +386,15 @@ vector<int> MapManager::getHorizontalEmpty(int gridId) {
     Grid* grid = this->getGrid(gridId);
     int pos;
     for (int i = grid->col - 1; i >= 0; i--) {
-        pos = i + grid->row * COLUMN;
+        pos = i + grid->row * TOTAL_COl;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
             break;
         }
     }
-    for (int i = grid->col + 1; i < COLUMN; i++) {
-        pos = i + grid->row * COLUMN;
+    for (int i = grid->col + 1; i < TOTAL_COl; i++) {
+        pos = i + grid->row * TOTAL_COl;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
@@ -409,15 +410,15 @@ vector<int> MapManager::getVerticalEmpty(int gridId) {
     Grid* grid = this->getGrid(gridId);
     int pos;
     for (int i = grid->row - 1; i >= 0; i--) {
-        pos = grid->col + i * COLUMN;
+        pos = grid->col + i * TOTAL_COl;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
             break;
         }
     }
-    for (int i = grid->row + 1; i < ROW; i++) {
-        pos = grid->col + i * COLUMN;
+    for (int i = grid->row + 1; i < TOTAL_ROW; i++) {
+        pos = grid->col + i * TOTAL_COl;
         if (m_grids[pos]->status == Grid::Empty) {
             list.push_back(m_grids[pos]->id);
         } else {
