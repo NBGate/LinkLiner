@@ -42,7 +42,7 @@ void GameLayer::initView() {
     for (int i = 0; i < TOTAL_ROW; i++) {
         for (int j = 0; j < TOTAL_COl; j++) {
             GridNode* node = GridNode::create();
-            node->setAnchorPoint(ccp(0, 0));
+            node->setAnchorPoint(CCPoint(0.5, 0.5));
             float x = origin.x + GRID_ORIGIN_X + j * GRID_SPACING;
             float y = origin.y + GRID_ORIGIN_Y + i * GRID_SPACING;
             node->setPosition(x, y);
