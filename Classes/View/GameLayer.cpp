@@ -94,10 +94,11 @@ void GameLayer::updateGridNode() {
             GridNode* node = GridNode::create();
             node->setTag(pos->second->id);
             CCSprite *sprite = CCSprite::create(this->imageFilename(pos->second->imageId)->getCString());
-            sprite->setScale(0.5f);
             if (status & Grid::Select) {
                 //CCLog("Select1 Id: %d", pos->second->id);
                 sprite->setScale(0.55f);
+            } else {
+                sprite->setScale(0.5f);
             }
             sprite->setPosition(CCPoint(0,0));
             node->setContentSize(sprite->boundingBox().size);

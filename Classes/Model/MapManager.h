@@ -62,6 +62,11 @@ public:
 
     const static int ROW = 7;
     const static int COLUMN = 10;
+    
+    //连一次的基本分数
+    const static int BASE_SCORE = 100;
+    //连击一次的基本分，多次直接乘以基本连击分值
+    const static int DOUBLE_HIT_SCORE = 50;
 private:
     int m_maps[7][10];
     int m_imageTypeCount;
