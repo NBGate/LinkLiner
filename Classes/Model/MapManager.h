@@ -58,6 +58,7 @@ public:
     bool isMapClear();
     bool linkable();
     Match getMatch();
+    void reArrange();
 
     const static int ROW = 7;
     const static int COLUMN = 10;
