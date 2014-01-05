@@ -47,7 +47,7 @@ int g_images[20][2] = {
 };
 
 MapManager::MapManager() {
-    initMap(20);
+    initMap(1);
     initManager();
 }
 
@@ -113,8 +113,16 @@ Grid* MapManager::getSelectGrid() {
 }
 
 void MapManager::setSelectGrid(int gridId) {
-    if (m_grids.find(gridId) == m_grids.end())
+    if (gridId == m_selectId) {
         return;
+    }
+    
+    clearSelectGrid();
+    
+    if (m_grids.find(gridId) == m_grids.end()) {
+        m_selectId = -1;
+        return;
+    }
 
     m_selectId = gridId;
     m_grids[m_selectId]->status |= Grid::Select;

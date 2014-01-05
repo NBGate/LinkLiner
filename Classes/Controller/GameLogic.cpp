@@ -4,10 +4,11 @@
 
 GameLogic::GameLogic() {
     for (int i = 0; i < 20; i++) {
-        MapManager* map = new MapManager();
+        MapManager* map = new MapManager(++i);
         m_maps.push_back(map);
     }
     m_currentMap = m_maps[0];
+    currentMapIndex = 0;
 }
 
 GameLogic::~GameLogic() {
@@ -44,17 +45,19 @@ void GameLogic::touchGrid(int gridId) {
 
     if (grid == NULL) {
         m_currentMap->setSelectGrid(gridId);
-    }
-    else {
+    } else {
         if (m_currentMap->linkGrid(grid->id, gridId) == false) {
-            m_currentMap->clearSelectGrid();
+//            m_currentMap->clearSelectGrid();
             m_currentMap->setSelectGrid(gridId);
-        }
-        else {
-            m_currentMap->clearSelectGrid();
+        } else {
+//            m_currentMap->clearSelectGrid();
             grid->status = Grid::Empty;
             m_currentMap->getGrid(gridId)->status = Grid::Empty;
             m_currentMap->setSelectGrid(-1);
+            if (m_currentMap->isMapClear()) {
+                currentMapIndex++;
+                m_currentMap = m_maps[currentMapIndex];
+            }
         }
     }
 }

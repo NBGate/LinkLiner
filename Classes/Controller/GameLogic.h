@@ -33,6 +33,7 @@ private:
     MapPool m_maps;
     GameLayer* m_view;
     MapManager* m_currentMap;
+    int currentMapIndex;
 };
 
 #endif // __GameLogic_H__
