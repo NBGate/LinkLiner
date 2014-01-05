@@ -85,6 +85,7 @@ private:
     vector<int> getHorizontalEmpty(int gridId);
     vector<int> getVerticalEmpty(int gridId);
     int random(int size) {return rand()%size;};
+    void swap(Grid *g1, Grid *g2);
 };
 
 #endif // __MapManager_H__

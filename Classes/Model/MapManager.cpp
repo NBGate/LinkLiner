@@ -456,18 +456,22 @@ bool MapManager::linkable() {
 void MapManager::reArrange() {
     int len = m_grids.size();
     for (int i = 0; i < len; i++) {
-        for (int j = i + 1; j < len; j++) {
+        for (int j = len - 1; j > i; j--) {
             if (m_grids[i]->status == Grid::Empty || m_grids[j]->status == Grid::Empty) {
                 continue;
             }
             if (m_grids[i]->imageId != m_grids[j]->imageId) {
-                Path p = match(m_grids[i]->id, m_grids[j]->id);
-                if (p.size() > 0) {
-                    
-                }
+                swap(m_grids[i], m_grids[j]);
+                continue;
             }
         }
     }
+}
+
+void MapManager::swap(Grid *g1, Grid *g2) {
+    Grid temp = *g1;
+    *g1 = *g2;
+    *g2 = temp;
 }
 
 
