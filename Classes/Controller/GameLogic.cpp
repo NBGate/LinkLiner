@@ -54,11 +54,11 @@ void GameLogic::touchGrid(int gridId) {
             grid->status = Grid::Empty;
             m_currentMap->getGrid(gridId)->status = Grid::Empty;
             m_currentMap->setSelectGrid(-1);
+            int currentScore = m_currentMap->getScore();
             if (m_currentMap->isMapClear()) {
                 currentMapIndex++;
                 m_currentMap = m_maps[currentMapIndex];
             }
-            int currentScore = m_currentMap->getScore();
             m_currentMap->setScore(currentScore + BASE_SCORE);
         }
     }
