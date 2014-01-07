@@ -53,10 +53,16 @@ void GameLayer::initView() {
         }
     }
     
-    m_showNumberNode = ShowNumberNode::createShowNumberNode("numbers.png", 100000, 22, 30);
-    m_showNumberNode->f_ShowNumber(0);
-    m_showNumberNode->setPosition(800, 610);
-    this->addChild(m_showNumberNode, 100);
+    m_score = ShowNumberNode::createShowNumberNode("numbers.png", INT_MAX, 22, 30);
+    m_score->f_ShowNumber(0);
+    m_score->setPosition(800, 610);
+    this->addChild(m_score, 100);
+    
+    m_time = ShowNumberNode::createShowNumberNode("numbers.png", INT_MAX, 22, 30);
+    m_time->f_ShowNumber(60);
+    m_time->setPosition(100, 610);
+    this->addChild(m_time, 100);
+    
 }
 
 
@@ -104,7 +110,9 @@ void GameLayer::updateGridNode() {
     }
     int score = map->getScore();
     CCLog("score: %d", score);
-    m_showNumberNode->f_ShowNumber(score);
+    m_score->f_ShowNumber(score);
+    int time = map->getTime();
+    m_time->f_ShowNumber(time);
 }
 
 void GameLayer::linkEffectCallback() {

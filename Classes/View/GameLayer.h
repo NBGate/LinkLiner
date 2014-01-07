@@ -36,8 +36,8 @@ private:
 private:
     GridNode*   m_gridNodeArray[TOTAL_ROW*TOTAL_COl];
     GameLogic*  m_logic;
-    ShowNumberNode* m_showNumberNode;
-    
+    ShowNumberNode* m_score;
+    ShowNumberNode* m_time;
 };
 
 #endif // __GameLayer_H_
