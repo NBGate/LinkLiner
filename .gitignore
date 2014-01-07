@@ -15,20 +15,26 @@ local.properties
 
 proj.ios/LinkLiner.xcodeproj/project.pbxproj
 
-proj.ios/LinkLiner.xcodeproj/project.pbxproj
-
-proj.ios/LinkLiner.xcodeproj/project.pbxproj
-
 proj.ios/LinkLiner.xcodeproj/project.xcworkspace/xcshareddata/LinkLiner.xccheckout
 
-proj.ios/LinkLiner.xcodeproj/project.pbxproj
-
 proj.ios/LinkLiner.xcodeproj/xcuserdata/guagua.xcuserdatad/xcdebugger/Breakpoints_v2.xcbkptlist
+
+*.pbxproj
+
+proj.ios/LinkLiner.xcodeproj/xcuserdata/guagua.xcuserdatad/xcschemes/xcschememanagement.plist
+
+proj.android/.cproject
+
+proj.android/.cproject
+
+*.properties
+
+*.prefs
+
+proj.ios/LinkLiner.xcodeproj/project.pbxproj
 
 proj.ios/LinkLiner.xcodeproj/project.pbxproj
 
 proj.ios/LinkLiner.xcodeproj/project.pbxproj
 
 *.pbxproj
-
-proj.ios/LinkLiner.xcodeproj/xcuserdata/guagua.xcuserdatad/xcschemes/xcschememanagement.plist
