@@ -2,8 +2,8 @@
 
 void NumberSprite::myInit(float width, float lenght)
 {
-    s_width     =   width;
-    s_lenght    =   lenght;
+    m_width     =   width;
+    m_lenght    =   lenght;
 }
 
 NumberSprite *NumberSprite::CreateNumberSprite(CCTexture2D *pTexture, float width, float lenght)
@@ -25,5 +25,5 @@ void NumberSprite::f_ShowNumber(int num)
 {
    
     this->setVisible(true)  ;
-    this->setTextureRect(CCRectMake(s_width * num, 0, s_width, s_lenght));
+    this->setTextureRect(CCRectMake(m_width * num, 0, m_width, m_lenght));
 }

@@ -23,17 +23,15 @@ public:
      */
     void f_ShowNumber(int num);
     
-
-    /**初始化 */
     void myInit(float width, float lenght);
 
     
 private:
     /** 保存输入的图片宽高，用于显示滚动数字或是直接显示数字*/
     //保存显示图片宽度
-    float s_width;
+    float m_width;
     //保存图片高度
-    float s_lenght;
+    float m_lenght;
 
 
    };
