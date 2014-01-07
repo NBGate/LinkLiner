@@ -58,6 +58,8 @@ void GameLogic::touchGrid(int gridId) {
                 currentMapIndex++;
                 m_currentMap = m_maps[currentMapIndex];
             }
+            int currentScore = m_currentMap->getScore();
+            m_currentMap->setScore(currentScore + BASE_SCORE);
         }
     }
 }

@@ -47,12 +47,12 @@ int g_images[20][2] = {
     {40, 10}
 };
 
-MapManager::MapManager() {
+MapManager::MapManager():m_score(0),m_time(0) {
     initMap(1);
     initManager();
 }
 
-MapManager::MapManager(int level) {
+MapManager::MapManager(int level):m_score(0),m_time(0) {
     initMap(level);
     initManager();
 }
@@ -439,6 +439,8 @@ bool MapManager::isMapClear() {
 }
 
 MapManager::Match MapManager::getMatch() {
+    if (m_matchQueue.size() <= 0)
+        return Match();
     Match m = m_matchQueue.front();
     m_matchQueue.pop();
     return m;

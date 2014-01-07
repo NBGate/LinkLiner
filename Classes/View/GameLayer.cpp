@@ -1,6 +1,8 @@
 #include <Config.h>
 #include "GameLayer.h"
 #include "GridNode.h"
+#include "Effect.h"
+#include "ShowNumberNode.h"
 #include <SimpleAudioEngine.h>
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
@@ -37,7 +39,7 @@ void GameLayer::initView() {
     bgSprite->setPosition(CCPoint(origin.x + visibleSize.width / 2, origin.y + visibleSize.height / 2));
     bgSprite->setAnchorPoint(CCPoint(0.5, 0.5));
     bgSprite->setRotation(90);
-    this->addChild(bgSprite);
+    this->addChild(bgSprite, -1000);
 
     for (int i = 0; i < TOTAL_ROW; i++) {
         for (int j = 0; j < TOTAL_COl; j++) {
@@ -46,10 +48,21 @@ void GameLayer::initView() {
             float x = origin.x + GRID_ORIGIN_X + j * GRID_SPACING;
             float y = origin.y + GRID_ORIGIN_Y + i * GRID_SPACING;
             node->setPosition(x, y);
-            this->addChild(node);
+            this->addChild(node, 100);
             m_gridNodeArray[i * TOTAL_COl + j] = node;
         }
     }
+    
+    m_score = ShowNumberNode::createShowNumberNode("numbers.png", INT_MAX, 22, 30);
+    m_score->f_ShowNumber(0);
+    m_score->setPosition(800, 610);
+    this->addChild(m_score, 100);
+    
+    m_time = ShowNumberNode::createShowNumberNode("numbers.png", INT_MAX, 22, 30);
+    m_time->f_ShowNumber(60);
+    m_time->setPosition(100, 610);
+    this->addChild(m_time, 100);
+    
 }
 
 
@@ -79,6 +92,7 @@ void GameLayer::registerWithTouchDispatcher() {
 void GameLayer::update(float delta) {
     m_logic->update(delta);
     updateGridNode();
+    linkEffect();
 }
 
 void GameLayer::updateGridNode() {
@@ -90,9 +104,37 @@ void GameLayer::updateGridNode() {
     MapManager::GridArray::const_iterator pos = grids.begin();
     for (; pos != grids.end(); ++pos) {
         Grid* grid = pos->second;
-        int status = grid->status;
+        //int status = grid->status;
         int index = grid->row * TOTAL_COl + grid->col;
         m_gridNodeArray[index]->updateGrid(pos->second);
+    }
+    int score = map->getScore();
+    CCLog("score: %d", score);
+    m_score->f_ShowNumber(score);
+    int time = map->getTime();
+    m_time->f_ShowNumber(time);
+}
+
+void GameLayer::linkEffectCallback() {
+}
+
+void GameLayer::linkEffect() {
+    MapManager* map = m_logic->currentMap();
+    if (map == NULL)
+        return;
+
+    MapManager::Match m = map->getMatch();
+    while (m.path.size() > 0) {
+        int end = m.path.size();
+        std::vector<CCPoint> posArray;
+        for (int i = 0; i < end; i++) {
+            Grid* grid = map->getGrid(m.path[i]);
+            posArray.push_back(m_gridNodeArray[grid->row * TOTAL_COl+grid->col]->getPosition());
+        }
+        Effect::instance()->linkEffect(this, posArray);
+        CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("link.mp3", false);
+
+        m = map->getMatch();
     }
 }
 
