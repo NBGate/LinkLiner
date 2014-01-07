@@ -14,10 +14,10 @@ public:
         path: 文件名
         numberMAX：数字显示的最大值
         showwidth: 每个数字图片的宽度
-        showheight:每个数字图片的宽度
+        showheight:每个数字图片的高度
 
     */
-    static ShowNumberNode *CreateShowNumberNode(const char *path, int numberMAX, float showwidth, float showheight);
+    static ShowNumberNode *createShowNumberNode(const char *path, int numberMAX, float showwidth, float showheight);
 
     /*同上*/
     bool Init(const char *path, int numberMAX, float showwidth, float showheight);
@@ -41,20 +41,20 @@ private:
 private:
    
     //用于保存数字最大值
-    int s_NumberMax;
+    int m_numberMax;
 
     //计算数字最大位数
-    int s_NumberLength;
+    int m_numberLength;
 
     //图片宽度
-    float s_ShowWidth;
+    float m_showWidth;
 
     //图片的高度
-    float s_ShowHeight;
+    float m_showHeight;
 
-    CCSpriteBatchNode *batchNode ;
+    CCSpriteBatchNode* m_batchNode ;
 
 };
 
 
-#endif /* defined(__ShowNumberNodeTest__ShowNumberNode__) */
+#endif

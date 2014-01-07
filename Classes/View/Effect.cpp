@@ -22,7 +22,7 @@ void Effect::linkEffect(CCNode* target, const vector<CCPoint>& posArray) {
     if (target == NULL || size <= 1)
         return;
 
-    CCNode* top = CCNode::create();
+    //CCNode* top = CCNode::create();
     for (int i = 0; i < size - 1; i++) {
         target->addChild(linkEffectNode(posArray[i], posArray[i+1]));
     }

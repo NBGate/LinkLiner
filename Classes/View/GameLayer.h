@@ -8,6 +8,7 @@ USING_NS_CC;
 
 class GameLogic;
 class GridNode;
+class ShowNumberNode;
 
 class GameLayer : public CCLayer {
 public:
@@ -35,6 +36,8 @@ private:
 private:
     GridNode*   m_gridNodeArray[TOTAL_ROW*TOTAL_COl];
     GameLogic*  m_logic;
+    ShowNumberNode* m_showNumberNode;
+    
 };
 
 #endif // __GameLayer_H_

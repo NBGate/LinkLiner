@@ -2,6 +2,7 @@
 #include "GameLayer.h"
 #include "GridNode.h"
 #include "Effect.h"
+#include "ShowNumberNode.h"
 #include <SimpleAudioEngine.h>
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
@@ -51,6 +52,11 @@ void GameLayer::initView() {
             m_gridNodeArray[i * TOTAL_COl + j] = node;
         }
     }
+    
+    m_showNumberNode = ShowNumberNode::createShowNumberNode("numbers.png", 100000, 22, 30);
+    m_showNumberNode->f_ShowNumber(1000);
+    m_showNumberNode->setPosition(800, 610);
+    this->addChild(m_showNumberNode, 100);
 }
 
 
@@ -96,6 +102,9 @@ void GameLayer::updateGridNode() {
         int index = grid->row * TOTAL_COl + grid->col;
         m_gridNodeArray[index]->updateGrid(pos->second);
     }
+    int score = map->getScore();
+    CCLog("score: %d", score);
+    m_showNumberNode->f_ShowNumber(score);
 }
 
 void GameLayer::linkEffectCallback() {

@@ -56,7 +56,7 @@ bool Menu::init()
     CCLabelTTF* label = CCLabelTTF::create("连连看", "Marker Felt", 48);
 	label->setPosition(  ccp(size.width /2 , size.height/2 + 80) );
     this->addChild(label, 1);
-    CCActionInterval* blinkAtion = CCBlink::create(3, 3);
+    CCActionInterval* blinkAtion = CCBlink::create(1, 1);
 	CCSprite* button = CCSprite::create("play.png");
     button->setPosition(  ccp(size.width/2, size.height/2) );
     button->runAction(blinkAtion);

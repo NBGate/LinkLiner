@@ -1,4 +1,3 @@
-
 #ifndef __LinkLinker__NumberSprite__
 #define __LinkLinker__NumberSprite__
 
@@ -26,7 +25,7 @@ public:
     
 
     /**初始化 */
-    bool myInit(float width, float lenght);
+    void myInit(float width, float lenght);
 
     
 private:
@@ -39,4 +38,4 @@ private:
 
    };
 
-#endif /* defined(__ShowNumberNodeTest__NumberSprite__) */
+#endif 

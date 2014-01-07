@@ -1,14 +1,6 @@
-//
-//  NumberSprite.cpp
-//  ShowNumberNodeTest
-//
-//  Created by Za aa on 13-7-14.
-//
-// refer to http://blog.csdn.net/farsa/article/details/9430155
-
 #include "NumberSprite.h"
 
-bool NumberSprite::myInit(float width, float lenght)
+void NumberSprite::myInit(float width, float lenght)
 {
     s_width     =   width;
     s_lenght    =   lenght;
