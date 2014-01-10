@@ -75,6 +75,10 @@ void GridNode::showSelectAnimation() {
     CCLog("showSelectAnimation");
     m_animSprite->setVisible(true);
     m_animSprite->runAction(m_selectAnimate);
+    // TODO 选择使用统一的背景颜色，加圈为提示配对
+    //ccColor3B selectColor;
+    //selectColor.r = 255, selectColor.g = 0, selectColor.b = 0;
+    //m_gridSprite->setColor(selectColor);
 }
 
 void GridNode::hideSelectAnimation() {
@@ -83,4 +87,5 @@ void GridNode::hideSelectAnimation() {
 
     m_animSprite->stopActionByTag(SELECT_ACTION_TAG);
     m_animSprite->setVisible(false);
+    
 }

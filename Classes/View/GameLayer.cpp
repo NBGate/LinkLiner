@@ -109,7 +109,7 @@ void GameLayer::updateGridNode() {
         m_gridNodeArray[index]->updateGrid(pos->second);
     }
     int score = map->getScore();
-    CCLog("score: %d", score);
+    //CCLog("score: %d", score);
     m_score->f_ShowNumber(score);
     int time = map->getTime();
     m_time->f_ShowNumber(time);

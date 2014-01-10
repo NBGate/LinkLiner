@@ -10,7 +10,8 @@ class GameLogic;
 class GridNode;
 class ShowNumberNode;
 
-class GameLayer : public CCLayer {
+class GameLayer : public  CCLayer
+{
 public:
     enum NodeTags {
         ImageTag = 0x00000000,
