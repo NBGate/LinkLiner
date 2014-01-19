@@ -3,7 +3,8 @@
 #include "GridNode.h"
 #include "Effect.h"
 #include "ShowNumberNode.h"
-#include <SimpleAudioEngine.h>
+//#include <SimpleAudioEngine.h>
+#include <view/AudioManager.h>
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
 
@@ -67,8 +68,12 @@ void GameLayer::initView() {
 
 
 void GameLayer::initSound() {
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
-    CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("back2.mp3", true);
+    //CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
+    //CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("back2.mp3", true);
+    Music music;
+    music.musicFilePath = "back2.mp3";
+    AudioManager::playMusic(music);
+    AudioManager::setBgMusicVolume(0.3f);
 }
 
 bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
@@ -77,7 +82,10 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
         GridNode* grid = m_gridNodeArray[i];
         if (grid->isVisible() && grid->boundingBox().containsPoint(location)) {
             m_logic->touchGrid(grid->getTag());
-            CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("choose.wav");
+            //CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("choose.wav");
+            Sound sound;
+            sound.soundFilePath = "choose.wav";
+            AudioManager::playSound(sound);
             break;
         }
     }
@@ -132,8 +140,10 @@ void GameLayer::linkEffect() {
             posArray.push_back(m_gridNodeArray[grid->row * TOTAL_COl+grid->col]->getPosition());
         }
         Effect::instance()->linkEffect(this, posArray);
-        CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("link.mp3", false);
-
+        //CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("link.mp3", false);
+        Sound sound;
+        sound.soundFilePath = "link.mp3";
+        AudioManager::playSound(sound);
         m = map->getMatch();
     }
 }

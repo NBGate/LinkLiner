@@ -231,6 +231,7 @@
 		890EC5241871B8A100C6F0D6 /* Record.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 890EC5221871B8A100C6F0D6 /* Record.cpp */; };
 		890EC5281871B8D400C6F0D6 /* Utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 890EC5261871B8D400C6F0D6 /* Utils.cpp */; };
 		890EC55A1871D5FC00C6F0D6 /* MenuScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 890EC5581871D5FC00C6F0D6 /* MenuScene.cpp */; };
+		893ADA3E188BC439009EBDB1 /* AudioManager.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 893ADA3C188BC439009EBDB1 /* AudioManager.cpp */; };
 		894C5F56187031C800178A01 /* GridNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 894C5F54187031C800178A01 /* GridNode.cpp */; };
 		89517BC118796FC70044C702 /* ShowNumberNode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89517BBE18796FC70044C702 /* ShowNumberNode.cpp */; };
 		89517C0C187A33300044C702 /* CloseNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = 89517BE7187A33300044C702 /* CloseNormal.png */; };
@@ -760,6 +761,8 @@
 		890EC5271871B8D400C6F0D6 /* Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		890EC5581871D5FC00C6F0D6 /* MenuScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MenuScene.cpp; sourceTree = "<group>"; };
 		890EC5591871D5FC00C6F0D6 /* MenuScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MenuScene.h; sourceTree = "<group>"; };
+		893ADA3C188BC439009EBDB1 /* AudioManager.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = AudioManager.cpp; sourceTree = "<group>"; };
+		893ADA3D188BC439009EBDB1 /* AudioManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AudioManager.h; sourceTree = "<group>"; };
 		894C5F54187031C800178A01 /* GridNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = GridNode.cpp; sourceTree = "<group>"; };
 		894C5F55187031C800178A01 /* GridNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridNode.h; sourceTree = "<group>"; };
 		89517BBE18796FC70044C702 /* ShowNumberNode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ShowNumberNode.cpp; sourceTree = "<group>"; };
@@ -1878,6 +1881,8 @@
 		93A9F5F41870103F00C5DE4A /* View */ = {
 			isa = PBXGroup;
 			children = (
+				893ADA3C188BC439009EBDB1 /* AudioManager.cpp */,
+				893ADA3D188BC439009EBDB1 /* AudioManager.h */,
 				89517C36187B7A590044C702 /* NumberSprite.cpp */,
 				89517C37187B7A590044C702 /* NumberSprite.h */,
 				89517C33187A36C10044C702 /* Effect.cpp */,
@@ -2187,6 +2192,7 @@
 				379BB9A217F03F3700829B88 /* CCDisplayFactory.cpp in Sources */,
 				379BB9A317F03F3700829B88 /* CCDisplayManager.cpp in Sources */,
 				379BB9A417F03F3700829B88 /* CCSkin.cpp in Sources */,
+				893ADA3E188BC439009EBDB1 /* AudioManager.cpp in Sources */,
 				379BB9A517F03F3700829B88 /* CCColliderDetector.cpp in Sources */,
 				379BB9A617F03F3700829B88 /* CCArmatureDataManager.cpp in Sources */,
 				379BB9A717F03F3700829B88 /* CCArmatureDefine.cpp in Sources */,
