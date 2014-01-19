@@ -9,6 +9,7 @@ USING_NS_CC;
 class GameLogic;
 class GridNode;
 class ShowNumberNode;
+struct MatchGrid;
 
 class GameLayer : public  CCLayer
 {
@@ -26,14 +27,16 @@ public:
 
     virtual void update(float delta);
     void timesUp() { }
+    void linkEffect(const MatchGrid* match);
     void linkEffectCallback();
+    void explodeEffect(const MatchGrid* match);
+    void explodeEffectCallback();
 
 private:
     void updateGridNode();
     void initSound();
     void initView();
 
-    void linkEffect();
 private:
     GridNode*   m_gridNodeArray[TOTAL_ROW*TOTAL_COl];
     GameLogic*  m_logic;

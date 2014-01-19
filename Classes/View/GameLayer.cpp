@@ -3,13 +3,12 @@
 #include "GridNode.h"
 #include "Effect.h"
 #include "ShowNumberNode.h"
-//#include <SimpleAudioEngine.h>
-#include <view/AudioManager.h>
 #include <Controller/GameLogic.h>
 #include <Model/MapManager.h>
+#include <Utils/AudioManager.h>
 
 GameLayer::GameLayer() {
-    m_logic = new GameLogic();
+    m_logic = new GameLogic(this);
 }
 
 GameLayer::~GameLayer() {
@@ -68,12 +67,8 @@ void GameLayer::initView() {
 
 
 void GameLayer::initSound() {
-    //CocosDenshion::SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.3f);
-    //CocosDenshion::SimpleAudioEngine::sharedEngine()->playBackgroundMusic("back2.mp3", true);
-    Music music;
-    music.musicFilePath = "back2.mp3";
-    AudioManager::playMusic(music);
-    AudioManager::setBgMusicVolume(0.3f);
+    AudioManager::instance()->setBackgroundMusicVolume(0.3f);
+    AudioManager::instance()->playBackgroundMusic("back2.mp3");
 }
 
 bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
@@ -82,10 +77,7 @@ bool GameLayer::ccTouchBegan(CCTouch *pTouch, CCEvent *pEvent) {
         GridNode* grid = m_gridNodeArray[i];
         if (grid->isVisible() && grid->boundingBox().containsPoint(location)) {
             m_logic->touchGrid(grid->getTag());
-            //CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("choose.wav");
-            Sound sound;
-            sound.soundFilePath = "choose.wav";
-            AudioManager::playSound(sound);
+            AudioManager::instance()->playEffect("choose.wav");
             break;
         }
     }
@@ -100,7 +92,6 @@ void GameLayer::registerWithTouchDispatcher() {
 void GameLayer::update(float delta) {
     m_logic->update(delta);
     updateGridNode();
-    linkEffect();
 }
 
 void GameLayer::updateGridNode() {
@@ -123,28 +114,34 @@ void GameLayer::updateGridNode() {
     m_time->f_ShowNumber(time);
 }
 
-void GameLayer::linkEffectCallback() {
-}
-
-void GameLayer::linkEffect() {
+void GameLayer::linkEffect(const MatchGrid* match) {
     MapManager* map = m_logic->currentMap();
-    if (map == NULL)
+    if (map == NULL || match == NULL)
         return;
 
-    MapManager::Match m = map->getMatch();
-    while (m.path.size() > 0) {
-        int end = m.path.size();
-        std::vector<CCPoint> posArray;
-        for (int i = 0; i < end; i++) {
-            Grid* grid = map->getGrid(m.path[i]);
-            posArray.push_back(m_gridNodeArray[grid->row * TOTAL_COl+grid->col]->getPosition());
-        }
-        Effect::instance()->linkEffect(this, posArray);
-        //CocosDenshion::SimpleAudioEngine::sharedEngine()->playEffect("link.mp3", false);
-        Sound sound;
-        sound.soundFilePath = "link.mp3";
-        AudioManager::playSound(sound);
-        m = map->getMatch();
+    int end = match->path.size();
+    std::vector<CCPoint> posArray;
+    for (int i = 0; i < end; i++) {
+        Grid* grid = map->getGrid(match->path[i]);
+        posArray.push_back(m_gridNodeArray[grid->row * TOTAL_COl+grid->col]->getPosition());
     }
+    Effect::instance()->linkEffect(this, posArray, callfunc_selector(GameLayer::linkEffectCallback));
+}
+
+void GameLayer::linkEffectCallback() {
+    m_logic->onLinkEffectEnd();
+}
+
+void GameLayer::explodeEffect(const MatchGrid* match) {
+    MapManager* map = m_logic->currentMap();
+    if (map == NULL || match == NULL)
+        return;
+
+    Grid* grid = map->getGrid(match->head);
+    GridNode* node = m_gridNodeArray[grid->row * TOTAL_COl+grid->col];
+    Effect::instance()->explodeEffect(this, node->getPosition());
+    grid = map->getGrid(match->tail);
+    node = m_gridNodeArray[grid->row * TOTAL_COl+grid->col];
+    Effect::instance()->explodeEffect(this, node->getPosition());
 }
 

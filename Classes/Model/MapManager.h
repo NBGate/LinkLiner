@@ -14,7 +14,9 @@ struct Grid {
         InValid     = 0x00000000,
         Normal      = 0x00000001,
         Select      = 0x00000002,
-        Empty       = 0x00000004,
+        Match       = 0x00000004,
+        Linking     = 0x00000008,
+        Empty       = 0x00000010,
         Edge        = 0x10000000
     };
     bool visible() const {
@@ -27,17 +29,18 @@ struct Grid {
     int id;
 };
 
+typedef vector<int> Path;
+
+struct MatchGrid {
+    int head;
+    int tail;
+    Path path;
+};
+
 class MapManager {
 public:
     typedef map<int, Grid*> GridArray;
-    typedef vector<int> Path;
-
-    struct Match {
-        int head;
-        int tail;
-        Path path;
-    };
-    typedef queue<Match> MatchQueue;
+    typedef queue<MatchGrid> MatchQueue;
 
     MapManager();
     MapManager(int level);
@@ -60,8 +63,10 @@ public:
     bool linkGrid(int gridId1, int gridId2);
     bool isMapClear();
     bool linkable();
-    Match getMatch();
+    MatchGrid popMatch();
     void reArrange();
+    void pushLink(const MatchGrid& m);
+    MatchGrid popLink();
 
 private:
     int m_maps[7][10];
@@ -73,6 +78,7 @@ private:
     float m_time;
     Path m_path;
     MatchQueue m_matchQueue;
+    MatchQueue m_linkQueue;
     GridArray m_grids;
     void initManager();
     void initMap(int level = 1);

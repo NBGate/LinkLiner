@@ -11,7 +11,8 @@ public:
     static Effect* instance();
     ~Effect() { }
 
-    void linkEffect(CCNode* target, const vector<CCPoint>& posArray);
+    void linkEffect(CCNode* target, const vector<CCPoint>& posArray, SEL_CallFunc callback = NULL);
+    void explodeEffect(CCNode* target, const CCPoint& position, SEL_CallFunc callback = NULL);
 
 private:
     CCNode* linkEffectNode(CCPoint p1, CCPoint p2);

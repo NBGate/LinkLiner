@@ -2,7 +2,8 @@
 #include <Model/MapManager.h>
 #include <View/GameLayer.h>
 
-GameLogic::GameLogic() {
+GameLogic::GameLogic(GameLayer* view) {
+    m_view = view;
     for (int i = 0; i < 20; i++) {
         MapManager* map = new MapManager(++i);
         m_maps.push_back(map);
@@ -38,6 +39,16 @@ void GameLogic::update(float delta) {
     else {
         m_currentMap->setTime(time);
     }
+    showLinkEffect();
+}
+
+void GameLogic::updateScore() {
+    int currentScore = m_currentMap->getScore();
+    if (m_currentMap->isMapClear()) {
+        currentMapIndex++;
+        m_currentMap = m_maps[currentMapIndex];
+    }
+    m_currentMap->setScore(currentScore + BASE_SCORE);
 }
 
 void GameLogic::touchGrid(int gridId) {
@@ -47,20 +58,36 @@ void GameLogic::touchGrid(int gridId) {
         m_currentMap->setSelectGrid(gridId);
     } else {
         if (m_currentMap->linkGrid(grid->id, gridId) == false) {
-//            m_currentMap->clearSelectGrid();
+            m_currentMap->clearSelectGrid();
             m_currentMap->setSelectGrid(gridId);
         } else {
-//            m_currentMap->clearSelectGrid();
-            grid->status = Grid::Empty;
-            m_currentMap->getGrid(gridId)->status = Grid::Empty;
+            m_currentMap->clearSelectGrid();
+            grid->status = Grid::Match;
+            m_currentMap->getGrid(gridId)->status = Grid::Match;
             m_currentMap->setSelectGrid(-1);
-            int currentScore = m_currentMap->getScore();
-            if (m_currentMap->isMapClear()) {
-                currentMapIndex++;
-                m_currentMap = m_maps[currentMapIndex];
-            }
-            m_currentMap->setScore(currentScore + BASE_SCORE);
         }
     }
 }
 
+void GameLogic::showLinkEffect() {
+    MatchGrid m = m_currentMap->popMatch();
+    while (m.path.size() > 0) {
+        m_currentMap->getGrid(m.head)->status = Grid::Linking;
+        m_currentMap->getGrid(m.tail)->status = Grid::Linking;
+        m_currentMap->pushLink(m);
+        view()->linkEffect(&m);
+        m = m_currentMap->popMatch();
+    }
+}
+
+void GameLogic::onLinkEffectEnd() {
+    MatchGrid m = m_currentMap->popLink();
+    if (m.path.size() <= 0)
+        return;
+
+    m_currentMap->getGrid(m.head)->status = Grid::Empty;
+    m_currentMap->getGrid(m.tail)->status = Grid::Empty;
+    view()->explodeEffect(&m);
+
+    updateScore();
+}

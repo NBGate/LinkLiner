@@ -35,7 +35,7 @@ bool GridNode::init() {
         }
         selectAnimatoin->setDelayPerUnit(0.5f / 5.0f);
         selectAnimatoin->setLoops(true);
-        m_selectAnimate = CCAnimate::create(selectAnimatoin);
+        m_selectAnimate = CCRepeatForever::create(CCAnimate::create(selectAnimatoin));
         m_selectAnimate->setTag(SELECT_ACTION_TAG);
         m_selectAnimate->retain();
 

@@ -156,7 +156,7 @@ void MapManager::initManager() {
     }
 }
 
-MapManager::Path MapManager::match(int gridId1, int gridId2) {
+Path MapManager::match(int gridId1, int gridId2) {
     if (gridId1 == gridId2 || gridId1 < 0 || gridId2 < 0) {
         return Path();
     }
@@ -188,7 +188,7 @@ MapManager::Path MapManager::match(int gridId1, int gridId2) {
 bool MapManager::linkGrid(int gridId1, int gridId2) {
     Path p = match(gridId1, gridId2);
     if (p.size() > 0) {
-        Match m;
+        MatchGrid m;
         m.head = gridId1;
         m.tail = gridId2;
         m.path = p;
@@ -438,11 +438,23 @@ bool MapManager::isMapClear() {
     return true;
 }
 
-MapManager::Match MapManager::getMatch() {
+MatchGrid MapManager::popMatch() {
     if (m_matchQueue.size() <= 0)
-        return Match();
-    Match m = m_matchQueue.front();
+        return MatchGrid();
+    MatchGrid m = m_matchQueue.front();
     m_matchQueue.pop();
+    return m;
+}
+
+void MapManager::pushLink(const MatchGrid& m) {
+    m_linkQueue.push(m);
+}
+
+MatchGrid MapManager::popLink() {
+    if (m_linkQueue.size() <= 0)
+        return MatchGrid();
+    MatchGrid m = m_linkQueue.front();
+    m_linkQueue.pop();
     return m;
 }
 

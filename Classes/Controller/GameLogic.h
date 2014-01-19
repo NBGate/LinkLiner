@@ -16,17 +16,20 @@ public:
         Match
     };
 
-    GameLogic();
+    GameLogic(GameLayer* view);
     virtual ~GameLogic();
 
     MapManager* currentMap() const { return m_currentMap; }
     void startNewGame();
     void startStage(int stage);
     void update(float delta);
+    void updateScore();
     void touchGrid(int gridId);
+    void onLinkEffectEnd();
 
 private:
     GameLayer* view() { return m_view; }
+    void showLinkEffect();
 private:
     typedef vector<MapManager*> MapPool;
     State m_state;
