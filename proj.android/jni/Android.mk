@@ -12,10 +12,12 @@ LOCAL_SRC_FILES := hellocpp/main.cpp \
                    ../../Classes/View/GridNode.cpp \
                    ../../Classes/View/MenuScene.cpp \
                    ../../Classes/View/Effect.cpp \
+				   ../../Classes/View/ShowNumberNode.cpp \
+				   ../../Classes/View/NumberSprite.cpp \
                    ../../Classes/Model/MapManager.cpp \
                    ../../Classes/Model/Record.cpp \
                    ../../Classes/Controller/GameLogic.cpp \
-                   ../../Classes/Utils/Utils.cpp
+                   ../../Classes/Utils/Utils.cpp 
 
 LOCAL_C_INCLUDES := $(LOCAL_PATH)/../../Classes
 
