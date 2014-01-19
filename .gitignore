@@ -6,6 +6,7 @@ bin/
 obj/
 gen/
 local.properties
+proj.android/assets
 
 *.xcworkspacedata
 
